@@ -1,0 +1,80 @@
+---
+
+# These packages have been used with Xenial+buildkit:
+# See also: do_system_xenial
+# https://github.com/civicrm/civicrm-buildkit/blob/master/bin/civi-download-tools#L307
+
+# Makes it easier to eventually switch between different versions (ex: 5.6).
+# TODO: cleanup so that we have only one PHP role for all versions.
+
+- apt_key:
+    url="http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x4F4EA0AAE5267A6C"
+    state=present
+  when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "16")
+  tags: php
+
+- apt_key:
+    url="http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x14AA40EC0831756756D7F66C4F4EA0AAE5267A6C"
+    state=present
+  when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
+  tags: php
+
+- apt_repository:
+    repo='deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main'
+    state=present
+    update_cache=yes
+  when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "16")
+  tags: php
+
+- apt_repository:
+    repo='deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main'
+    state=present
+    update_cache=yes
+  when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
+  tags: php
+
+- name: Debian | Add Sury.org apt reporitory key
+  apt_key:
+    url: "https://packages.sury.org/php/apt.gpg"
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/php.gpg
+  when: ansible_distribution == "Debian"
+  tags:
+    - php
+
+- apt_repository:
+    repo="deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main"
+    state=present
+    update_cache=yes
+  when: (ansible_distribution == "Debian")
+  tags: php
+
+
+
+- apt: name={{ item }} state=present install_recommends=no
+  with_items:
+    - php7.3-cli
+    - php7.3-common
+    - php7.3-curl
+    - php7.3-fpm
+    - php7.3-dev
+    - php7.3-gd
+    - php7.3-imap
+    - php7.3-intl
+    - php7.3-json
+    - php7.3-ldap
+    - php7.3-mbstring
+    - php7.3-mysql
+    - php7.3-opcache
+    - php7.3-readline
+    - php7.3-recode
+    - php7.3-soap
+    - php7.3-sqlite3
+    - php7.3-xml
+    - php7.3-xmlrpc
+    - php7.3-xsl
+    - php7.3-zip
+    - php7.3-bcmath
+    - apache2
+    - libapache2-mod-php7.3
+  tags: php

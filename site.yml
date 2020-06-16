@@ -1,0 +1,33 @@
+- hosts: icinga-satellite
+  sudo: yes
+  roles:
+    - icinga2
+  tags:
+    - icinga
+    - icinga2
+
+- hosts: all
+  sudo: yes
+  roles:
+    - backup-client
+  tags:
+    - backup-client
+- hosts: servers
+  sudo: yes
+  roles:
+    - common-all
+    - backup-client
+    - filebeat
+    - mysqlbackup
+    - ufw
+    - unattended-upgrades
+    - sshuserkeys
+  tags:
+    - minimum
+- hosts: php-servers
+  sudo: yes
+  roles:
+    - php
+  tags:
+    - php
+
