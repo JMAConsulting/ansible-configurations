@@ -14,3 +14,16 @@
     - borgbackup
   tags:
     - packages
+
+# Deploy backupninja rdiff config to onsite backup-server
+- name: Backupninja | deploy backup templates
+  template:
+    src: "{{ item }}"
+    dest: "/etc/backup.d/"
+    mode: 0600
+    owner: root
+  with_fileglob:
+    - ../templates/etc/backup.d/*
+  tags:
+    - backup-client
+    - backup-client-configuration

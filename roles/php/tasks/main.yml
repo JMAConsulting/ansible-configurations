@@ -24,6 +24,12 @@
   when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
   tags: php
 
+- apt_key:
+    url="http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x7BF576066ADA65728FC7E70A8C47BE8E75BCA694"
+    state=present
+  when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
+  tags: php
+
 - apt_repository:
     repo='deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main'
     state=present
@@ -33,6 +39,13 @@
 
 - apt_repository:
     repo='deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main'
+    state=present
+    update_cache=yes
+  when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
+  tags: php
+
+- apt_repository:
+    repo='deb http://ppa.launchpad.net/certbot/certbot/ubuntu bionic main'
     state=present
     update_cache=yes
   when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
@@ -82,4 +95,11 @@
     - php7.3-bcmath
     - apache2
     - libapache2-mod-php7.3
+  tags: php
+
+- apt: name={{ item }} state=present install_recommends=no
+  with_items:
+    - certbot
+    - python3-certbot-apache
+  when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
   tags: php

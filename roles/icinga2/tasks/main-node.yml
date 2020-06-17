@@ -14,7 +14,7 @@
   with_items:
     - icinga2
     - nagios-plugins
-    - libnagios-plugin-perl
+    - libmonitoring-plugin-perl
     - nagios-plugins-contrib # for mysql checks
   tags:
     - icinga2
