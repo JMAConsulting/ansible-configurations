@@ -1,5 +1,5 @@
 - hosts: icinga-satellite
-  sudo: yes
+  become: yes
   roles:
     - icinga2
   tags:
@@ -7,27 +7,33 @@
     - icinga2
 
 - hosts: all
-  sudo: yes
+  become: yes
   roles:
     - backup-client
   tags:
     - backup-client
 - hosts: servers
-  sudo: yes
+  become: yes
   roles:
     - common-all
     - backup-client
-    - filebeat
-    - mysqlbackup
+#    - mysqlbackup
     - ufw
     - unattended-upgrades
-    - sshuserkeys
+#    - sshuserkeys
   tags:
     - minimum
 - hosts: php-servers
-  sudo: yes
+  become: yes
   roles:
     - php
   tags:
     - php
-
+- hosts: localhost
+  become: yes
+  roles: 
+    - php
+    - common-all
+    - backup-client
+  tags:
+    - php

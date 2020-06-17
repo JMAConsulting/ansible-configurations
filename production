@@ -1,19 +1,19 @@
 rh3.jmaconsulting.biz
+localhost
 
 [servers:children]
 apache-servers
-backup-servers
-kvm-servers
-nginx-servers
 test-servers
-stats-servers
-unclassified-servers
 
 [icinga-satellite:children]
-servers
+apache-servers
 
 [php-servers]
 rh3.jmaconsulting.biz
+localhost
 
 [apache-servers]
 rh3.jmaconsulting.biz
+
+[test-servers]
+localhost

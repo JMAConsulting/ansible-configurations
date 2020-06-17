@@ -7,6 +7,11 @@
 # Makes it easier to eventually switch between different versions (ex: 5.6).
 # TODO: cleanup so that we have only one PHP role for all versions.
 
+- apt: name={{ item }} state=present install_recommends=no
+  with_items:
+    python-apt
+  tags: php
+
 - apt_key:
     url="http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x4F4EA0AAE5267A6C"
     state=present
