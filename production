@@ -5,6 +5,7 @@ rh6.jmaconsulting.biz
 rh7.jmaconsulting.biz
 rh8.jmaconsulting.biz
 rh9.jmaconsulting.biz
+oapproviderlist.ca
 localhost
 
 [servers:children]
@@ -22,6 +23,7 @@ rh6.jmaconsulting.biz
 rh7.jmaconsulting.biz
 rh8.jmaconsulting.biz
 rh9.jmaconsulting.biz
+oapproviderlist.ca
 localhost
 
 [apache-servers]
@@ -32,6 +34,7 @@ rh6.jmaconsulting.biz
 rh7.jmaconsulting.biz
 rh8.jmaconsulting.biz
 rh9.jmaconsulting.biz
+oapproviderlist.ca
 
 [test-servers]
 localhost

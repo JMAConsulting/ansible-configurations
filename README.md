@@ -14,5 +14,14 @@ If you only want to run part of the playbook e.g. the part associated with PHP t
 # To DO
 - Cover installing clamav and setting up a daily scanning job
 - create users + sudo access for JMA staff on servers as appropriate
-- Install wordpress related icigna2 checks
-- Install appropriate apache2 configuration and enable php module for apache
+- Set up icigna2 master node sensibly
+- set up sshd configuration sensibly.
+- Execute to set standard configuration for opha as well.
+
+# Details of configuration structure
+
+Hosts and groups that the host is part of is in the production file / inventory. Eeach host belongs to one or more groups and at the very least it belongs in the [server:children] group. The roles each group inherits is then contained in the `site.yml` file which specifies for each group what roles they should execute. The roles are then defined as sub folders within the roles folder. At the very least a role will have a tasks folder with a `main.yml` file.
+
+Variables can be used within roles e.g. `{{ php_version }}`. A role can and should provide a default for that which is generally found in the `<role name>/defaults/main.yml` file. However it may be necessary to set global defaults which are stored in the `group_vars/all` file or if a specific host needs to override the default e.g. in RH2 we need to use PHP7.1 because of the age of the CMS and CRMs on that host we then set it in the `host_vars/<fdqn of the server>` file e.g. `host_vars/rh2.jmaconsulting.biz`
+
+Within each role they can use functions to create files / templates based on stored templates within their role and depending on the host type you can determine if certain steps are to be run or not run.
