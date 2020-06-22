@@ -143,6 +143,7 @@
     - check_md_raid
     - check_mysqldump-secure
     - check_ufw
+    - check_wp_update
     - check_zpool
     - restart_service
     - run_aegir_verify
@@ -175,6 +176,7 @@
     - mysqldump
     - mysql_uptime
     - ufw
+    - wordpress
     - zpool
   notify: restart icinga2
   tags:
