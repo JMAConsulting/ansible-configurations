@@ -52,6 +52,12 @@
   tags:
     - ufw
 
+# UFW per host no port exceptions
+- ufw: src="{{ item.value.src }}" rule="{{ item.value.rule }}"
+  with_dict: "{{ ufw_extra_no_port | default({}) }}"
+  tags:
+    - ufw
+
 - name: Set ufw policy
   ufw: state=enabled direction=incoming policy=deny
   tags:

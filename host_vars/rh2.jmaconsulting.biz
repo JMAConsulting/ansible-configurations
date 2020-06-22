@@ -1,1 +1,9 @@
 php_version: 7.1
+
+ufw_extra_no_port:
+  vpn:
+    proto: any
+    port: any
+    src: 66.151.237.115
+    rule: allow
+    description: 'VPN to net atlantic'
