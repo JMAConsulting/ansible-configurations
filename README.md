@@ -10,3 +10,9 @@ This repository contains all the ansible configuration needed to install a new s
 4. Run `ansible-playbook -K -i production  -l <fdqn of the new server> ./site.yml`
 
 If you only want to run part of the playbook e.g. the part associated with PHP then run `ansible-playbook -K -i production  -l <fdqn of the new server> --tags php ./site.yml` 
+
+# To DO
+- Cover installing clamav and setting up a daily scanning job
+- create users + sudo access for JMA staff on servers as appropriate
+- Install wordpress related icigna2 checks
+- Install appropriate apache2 configuration and enable php module for apache

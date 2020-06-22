@@ -22,6 +22,7 @@
     dest: "/etc/backup.d/"
     mode: 0600
     owner: root
+    force: no
   with_fileglob:
     - ../templates/etc/backup.d/*
   tags:

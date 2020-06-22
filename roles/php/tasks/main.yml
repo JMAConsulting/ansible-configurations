@@ -31,21 +31,21 @@
   tags: php
 
 - apt_repository:
-    repo='deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main'
+    repo='deb http://ppa.launchpad.net/ondrej/php/ubuntu {{ ansible_distribution_release }} main'
     state=present
     update_cache=yes
   when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "16")
   tags: php
 
 - apt_repository:
-    repo='deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main'
+    repo='deb http://ppa.launchpad.net/ondrej/php/ubuntu {{ ansible_distribution_release }} main'
     state=present
     update_cache=yes
   when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
   tags: php
 
 - apt_repository:
-    repo='deb http://ppa.launchpad.net/certbot/certbot/ubuntu bionic main'
+    repo='deb http://ppa.launchpad.net/certbot/certbot/ubuntu {{ ansible_distribution_release }} main'
     state=present
     update_cache=yes
   when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
@@ -71,30 +71,30 @@
 
 - apt: name={{ item }} state=present install_recommends=no
   with_items:
-    - php7.3-cli
-    - php7.3-common
-    - php7.3-curl
-    - php7.3-fpm
-    - php7.3-dev
-    - php7.3-gd
-    - php7.3-imap
-    - php7.3-intl
-    - php7.3-json
-    - php7.3-ldap
-    - php7.3-mbstring
-    - php7.3-mysql
-    - php7.3-opcache
-    - php7.3-readline
-    - php7.3-recode
-    - php7.3-soap
-    - php7.3-sqlite3
-    - php7.3-xml
-    - php7.3-xmlrpc
-    - php7.3-xsl
-    - php7.3-zip
-    - php7.3-bcmath
+    - php{{ php_version }}-cli
+    - php{{ php_version }}-common
+    - php{{ php_version }}-curl
+    - php{{ php_version }}-fpm
+    - php{{ php_version }}-dev
+    - php{{ php_version }}-gd
+    - php{{ php_version }}-imap
+    - php{{ php_version }}-intl
+    - php{{ php_version }}-json
+    - php{{ php_version }}-ldap
+    - php{{ php_version }}-mbstring
+    - php{{ php_version }}-mysql
+    - php{{ php_version }}-opcache
+    - php{{ php_version }}-readline
+    - php{{ php_version }}-recode
+    - php{{ php_version }}-soap
+    - php{{ php_version }}-sqlite3
+    - php{{ php_version }}-xml
+    - php{{ php_version }}-xmlrpc
+    - php{{ php_version }}-xsl
+    - php{{ php_version }}-zip
+    - php{{ php_version }}-bcmath
     - apache2
-    - libapache2-mod-php7.3
+    - libapache2-mod-php{{ php_version }}
   tags: php
 
 - apt: name={{ item }} state=present install_recommends=no
@@ -102,4 +102,14 @@
     - certbot
     - python3-certbot-apache
   when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
+  tags: php
+
+- apache2_module:
+    state: present
+    name: php{{ php_version}}
+  tags: php
+
+- apache2_module:
+    state: present
+    name: rewrite
   tags: php

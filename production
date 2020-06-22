@@ -1,4 +1,9 @@
+rh1.jmaconsulting.biz
 rh3.jmaconsulting.biz
+rh6.jmaconsulting.biz
+rh7.jmaconsulting.biz
+rh8.jmaconsulting.biz
+rh9.jmaconsulting.biz
 localhost
 
 [servers:children]
@@ -9,11 +14,21 @@ test-servers
 apache-servers
 
 [php-servers]
+rh1.jmaconsulting.biz
 rh3.jmaconsulting.biz
+rh6.jmaconsulting.biz
+rh7.jmaconsulting.biz
+rh8.jmaconsulting.biz
+rh9.jmaconsulting.biz
 localhost
 
 [apache-servers]
+rh1.jmaconsulting.biz
 rh3.jmaconsulting.biz
+rh6.jmaconsulting.biz
+rh7.jmaconsulting.biz
+rh8.jmaconsulting.biz
+rh9.jmaconsulting.biz
 
 [test-servers]
 localhost
