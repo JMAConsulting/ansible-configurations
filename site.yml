@@ -29,6 +29,12 @@
     - php
   tags:
     - php
+- hosts: kvm-servers
+  become: yes
+  roles:
+    - kvm-server
+  tags:
+    - kvm-server
 - hosts: localhost
   become: yes
   roles: 

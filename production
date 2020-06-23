@@ -6,10 +6,12 @@ rh7.jmaconsulting.biz
 rh8.jmaconsulting.biz
 rh9.jmaconsulting.biz
 oapproviderlist.ca
+ns5001132.ip-198-27-75.net
 localhost
 
 [servers:children]
 apache-servers
+kvm-servers
 test-servers
 
 [icinga-satellite:children]
@@ -35,6 +37,9 @@ rh7.jmaconsulting.biz
 rh8.jmaconsulting.biz
 rh9.jmaconsulting.biz
 oapproviderlist.ca
+
+[kvm-servers] 
+ns5001132.ip-198-27-75.net
 
 [test-servers]
 localhost
