@@ -29,19 +29,19 @@
 kvm_main_mac_address: ac:1f:6b:02:62:7c
 
 kvm_main_ipv4_address: 198.27.75.12
-kvm_main_ipv4_netmask: 24
+kvm_main_ipv4_netmask: 255.255.255.0
 kvm_main_ipv4_network: 198.27.75.0
 kvm_main_ipv4_broadcast: 198.27.75.255
 kvm_main_ipv4_gateway: 198.27.75.254
 kvm_main_ipv4_dns: 213.186.33.99
 
 kvm_main_ipv6_address: "2607:5300:0060:260c::"
-kvm_main_ipv6_netmask: 64
+kvm_main_ipv6_netmask: "64"
 kvm_main_ipv6_dns: "2001:41d0:3:163::1"
 kvm_main_ipv6_gateway: "2607:5300:0060:26ff:ff:ff:ff:ff"
 
 kvm_zfs_pool: zx1
 
 kvm_hosts:
+ - ovh1.jmaconsulting.biz
 
-  - icinga.jmaconsulting.biz

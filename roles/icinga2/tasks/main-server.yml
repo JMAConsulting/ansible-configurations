@@ -19,7 +19,7 @@
     - ufw
     - uwsgi
     - uwsgi-plugin-python
-    - php7.0-fpm # otherwise apache gets installed
+    - php7.3-fpm # otherwise apache gets installed
     - icingaweb2
     - icingaweb2-module-monitoring
     - whois # for domain_expiration check
@@ -100,6 +100,9 @@
   with_items:
     - check_ssl_cert
     - check_domain_expiration
+    - check_civicrm
+    - check_wp_update
+    - check_drupal
   notify: restart icinga2
   tags:
     - icinga2
@@ -120,15 +123,15 @@
 
 - name: Deploy PHP configuration overrides
   template:
-    src=etc/php/7.0/mods-available/symbiotic-icinga.ini
-    dest=/etc/php/7.0/mods-available/symbiotic-icinga.ini
+    src=etc/php/7.3/mods-available/icinga.ini
+    dest=/etc/php/7.3/mods-available/icinga.ini
     owner=root group=root mode=0644
   notify: restart php-fpm
   tags:
     - icingaweb2
 
 - name: Symlink PHP configuration to fpm
-  file: src="/etc/php/7.0/mods-available/symbiotic-icinga.ini" dest="/etc/php/7.0/fpm/conf.d/90-symbiotic-icinga.ini" owner=root group=root state=link
+  file: src="/etc/php/7.3/mods-available/icinga.ini" dest="/etc/php/7.3/fpm/conf.d/90-icinga.ini" owner=root group=root state=link
   notify: restart php-fpm
   tags:
     - icingaweb2

@@ -1,104 +1,170 @@
 #!/usr/bin/php
 <?php
 
-$host = trim($argv[1]);
-$cms = trim($argv[2]);
+/**
+ * Copyright 2014-2015 AGH Strategies, LLC
+ * Released under the Affero GNU Public License version 3
+ * but with NO WARRANTY: neither the implied warranty of merchantability
+ * nor fitness for a particular purpose
+ *
+ * Place in /usr/lib/nagios/plugins
+ *
+ * Call with the command:
+ * /usr/bin/php /usr/lib/nagios/plugins/check_civicrm.php
+ *
+ * Required arguments:
+ * --hostname <hostname>
+ * --protocol <http|https>
+ * --site-key <your site key>
+ * --api-key <an API key> must have system.check permission.  Use a key that has "Administer CiviCRM" permission, or better yet install https://github.com/MegaphoneJon/com.megaphonetech.monitoring
+ *
+ * Optional arguments:
+ * --cms <Drupal|Wordpress|Joomla|Backdrop|Drupal8>
+ * --rest-path <path to REST endpoint> NOTE: either --cms OR --path is required
+ * --warning-threshold <integer> Checks that report back this severity_id or higher are considered Nagios/Icinga warnings.
+ * --critical-threshold <integer> Checks that report back this severity_id or higher are considered Nagios/Icinga errors.
+ * --show-hidden <0|1> If set to "0", checks that are hidden in the CiviCRM Status Console will be hidden from Nagios/Icinga.
+ * --exclusions <comma-separated list of checks, no spaces> Any checks listed here will be excluded.  E.g. --exclude checkPhpVersion,checkLastCron will suppress the PHP version check and the cron check
+ */
+$shortopts = '';
+$longopts = ['exclude:', 'api-key:', 'site-key:', 'protocol:', 'cms:', 'rest-path:', 'show-hidden:', 'hostname:', 'warning-threshold', 'critical-threshold'];
+$options = getopt($shortopts, $longopts);
+checkRequired($options);
 
-if (empty($host)) {
-  echo 'Missing host argument.';
+$prot = $options['protocol'];
+$api_key = $options['api-key'];
+$site_key = $options['site-key'];
+$host_address = $options['hostname'];
+// $show_hidden will evaluate to true unless it's a zero.
+$show_hidden = $options['show-hidden'] ?? TRUE;
+$warning_threshold = $options['warning-threshold'] ?? 2;
+$critical_threshold = $options['critical-threshold'] ?? 4;
+$path = $options['path'] ?? NULL;
+$cms = $options['cms'] ?? NULL;
+$exclude = explode(',', $options['exclude'] ?? NULL);
+
+
+switch (strtolower($cms)) {
+  case 'joomla':
+   $path = 'administrator/components/com_civicrm/civicrm/extern/rest.php';
+    break;
+
+  case 'wordpress':
+    $path = 'wp-content/plugins/civicrm/civicrm/extern/rest.php';
+    //$path = 'wp-json/civicrm/v3/rest';
+    break;
+
+  case 'backdrop':
+    $path = 'modules/civicrm/extern/rest.php';
+    break;
+
+  case 'drupal':
+    $path = 'sites/all/modules/civicrm/extern/rest.php';
+    break;
+
+  case 'drupal8':
+    $path = 'libraries/civicrm/extern/rest.php';
+    break;
+}
+if (!$path) {
+  echo "You must specify either a valid CMS or a REST endpoint path.";
   exit(3);
 }
+systemCheck($prot, $host_address, $path, $site_key, $api_key, $show_hidden, $warning_threshold, $critical_threshold, $exclude);
 
-$tmp = '';
-$civistatus = '';
-
-if ($cms == 'drupal' || $cms == 'drupal8') {
-  exec('sudo -u aegir /usr/local/bin/drush @' . escapeshellarg($host) . ' cvapi System.check --out=json', $tmp);
-}
-elseif ($cms == 'wordpress') {
-  exec('sudo -u aegir /usr/local/bin/drush @' . escapeshellarg($host) . ' wp cv api System.check --out=json --strict=0', $tmp);
-}
-elseif ($cms == 'joomla') {
-  global $civicrm_cli;
-  global $civicrm_cli_ini; // required if TZ is not the same as the server
-  global $civicrm_cron_user;
-  global $civicrm_cron_pass;
-
-  require_once '/etc/civicrm/' . $host . '.php';
-
-  if ($civicrm_cli_ini) {
-    exec('sudo -u www-data /usr/bin/env php -c ' . escapeshellarg($civicrm_cli_ini) . ' ' . escapeshellarg($civicrm_cli) . ' -s ' . escapeshellarg($host) . ' -u ' . escapeshellarg($civicrm_cron_user) . ' -p ' . escapeshellarg($civicrm_cron_pass) . ' -e System -a check --json', $tmp);
-  }
-  else {
-    exec('sudo -u www-data /usr/bin/env php ' . escapeshellarg($civicrm_cli) . ' -s ' . escapeshellarg($host) . ' -u ' . escapeshellarg($civicrm_cron_user) . ' -p ' . escapeshellarg($civicrm_cron_pass) . ' -e System -a check --json', $tmp);
-  }
-}
-else {
-  echo 'Unsupported CMS: ' . $cms;
-  exit(3);
-}
-
-if ($tmp) {
-  if ($cms == 'joomla') {
-    $civistatus = json_decode(implode(' ', $tmp));
-  }
-  else {
-    $civistatus = json_decode($tmp[0]);
-  }
-
-  $check_status = 0;
-  $check_descriptions = array();
-
-  if (empty($civistatus)) {
-    if ($cms == 'drupal' || $cms == 'drupal8') {
-      exec('sudo -u aegir /usr/local/bin/drush @' . escapeshellarg($host) . ' cc drush');
-      echo 'Failed to check status (1). Drush cache flushed for the next run.';
+/**
+ * Given an array of command-line options, do some sanity checks, bail if missing required fields etc.
+ * @param array $options
+ */
+function checkRequired($options) {
+  $requiredArguments = ['hostname', 'protocol', 'site-key', 'api-key'];
+  $arguments = array_keys($options);
+  $missing = NULL;
+  foreach ($requiredArguments as $required) {
+    if (!in_array($required, $arguments)) {
+      $missing .= " $required";
     }
-    else {
-      echo 'Failed to check status (1).';
-    }
+  }
+  if (isset($missing)) {
+    echo "You are missing the following required arguments:$missing";
+    exit(3);
+  }
+  if (!in_array($options['protocol'], ['http', 'https'])) {
+    echo '"protocol" argument must be "http" or "https"' .
+    exit(3);
+  }
+}
 
+function systemCheck($prot, $host_address, $path, $site_key, $api_key, $show_hidden, $warning_threshold, $critical_threshold, $exclude = []) {
+  $options = array(
+    'http' => array(
+      'header'  => "Content-type: application/x-www-form-urlencoded\r\nUser-Agent: CiviMonitor\r\n",
+      //'method'  => 'POST',
+      //'content' => http_build_query($request),
+    ),
+  );
+  $context  = stream_context_create($options);
+  $result = file_get_contents("$prot://$host_address/$path?entity=system&action=check&key=$site_key&api_key=$api_key&json=1&version=3", FALSE, $context);
+
+  $a = json_decode($result, TRUE);
+
+  if (is_null($a)) {
+    echo "Error decoding json:\n\n";
+    echo var_dump($result);
     exit(3);
   }
 
-  if ($civistatus->is_error) {
-    echo 'API call failed: ' . $civistatus->error_message;
-    exit(3);
-  }
+  if ($a["is_error"] != 1 && is_array($a['values'])) {
+    // Return status is "OK" untill we find out otherwise.
+    $exit = 0;
 
-  foreach ($civistatus->values as $key => $val) {
-    // Issue was acknowledged (hidden from the Status Check UI).
-    if (!$val->is_visible) {
-      continue;
-    }
+    $message = [];
 
-    if (in_array($val->severity, ['warning', 'error', 'critical'])) {
-      // We don't want to downgrade an 'error' status to 'warning'.
-      if ($check_status == 0) {
-        $check_status = 1;
+    $max_severity = 0;
+    foreach ($a["values"] as $attrib) {
+
+      // Remove excluded checks.
+      if (in_array($attrib['name'], $exclude)) {
+        continue;
       }
 
-      $check_descriptions[] = $val->title;
-    }
+      // first check for missing info
+      $neededKeys = array(
+        'title' => TRUE,
+        'message' => TRUE,
+        'name' => TRUE,
+      );
+      if (array_intersect_key($neededKeys, $attrib) != $neededKeys) {
+        $message[] = 'Missing keys: ' . implode(', ', array_diff($neededKeys, array_intersect_key($neededKeys, $attrib))) . '.';
+        $exit = 3;
+        continue;
+      }
+      // Skip this item if it's hidden and we're hiding hidden items
+      if ($attrib['is_visible'] == 0 && !$show_hidden) {
+        continue;
+      }
+      // Skip this item if it doesn't meet the warning threshold
+      if ($attrib['severity_id'] < $warning_threshold) {
+        continue;
+      }
+      $message[] = filter_var($attrib['title'], FILTER_SANITIZE_STRING) . ': ' . filter_var($attrib['message'], FILTER_SANITIZE_STRING);
 
-    if ($val->severity == 'error' || $val->severity == 'critical') {
-      $check_status = 2;
-    }
-  }
+      if ($attrib['severity_id'] >= $warning_threshold) {
+        $max_severity = max(1, $max_severity);
+      };
+      if ($attrib['severity_id'] >= $critical_threshold) {
+        $max_severity = max(2, $max_severity);
+      };
 
-  if ($check_status == 0) {
-    echo 'OK';
-    exit(0);
+    }
+    echo implode(' / ', $message);
+    exit($max_severity);
   }
-  else {
-    echo implode(' ', $check_descriptions);
-    exit($check_status);
+  if ($a["is_error"] == 1) {
+    echo $a['error_message'];
+    exit(2);
   }
+  echo 'Unknown error';
+  exit(3);
 }
 
-if ($cms == 'drupal' || $cms == 'drupal8') {
-  exec('sudo -u aegir /usr/local/bin/drush @' . escapeshellarg($host) . ' cc drush');
-}
-
-echo 'Failed to check status (2). Drush cache flushed for the next run.';
-exit(3);

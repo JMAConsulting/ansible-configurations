@@ -6,16 +6,17 @@ rh7.jmaconsulting.biz
 rh8.jmaconsulting.biz
 rh9.jmaconsulting.biz
 oapproviderlist.ca
-ns5001132.ip-198-27-75.net
-localhost
+ovh.jmaconsulting.biz
+ovh1.jmaconsulting.biz
+environmentalhealth.org
+members.opha.on.ca
 
 [servers:children]
 apache-servers
 kvm-servers
-test-servers
 
 [icinga-satellite:children]
-apache-servers
+servers
 
 [php-servers]
 rh1.jmaconsulting.biz
@@ -26,6 +27,8 @@ rh7.jmaconsulting.biz
 rh8.jmaconsulting.biz
 rh9.jmaconsulting.biz
 oapproviderlist.ca
+environmentalhealth.org
+members.opha.on.ca
 localhost
 
 [apache-servers]
@@ -37,9 +40,11 @@ rh7.jmaconsulting.biz
 rh8.jmaconsulting.biz
 rh9.jmaconsulting.biz
 oapproviderlist.ca
+environmentalhealth.org
+members.opha.on.ca
 
 [kvm-servers] 
-ns5001132.ip-198-27-75.net
+ovh.jmaconsulting.biz
 
-[test-servers]
-localhost
+[icinga-servers]
+ovh1.jmaconsulting.biz
