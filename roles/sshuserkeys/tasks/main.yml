@@ -3,19 +3,18 @@
 - name: Create system users
   user: name={{ item | basename | regex_replace('\.pub$', '') }} shell="/bin/bash"
   with_fileglob:
-    - /etc/ansible/files/civicrm/sshkeys/global/*.pub
+    - ../sshkeys/*.pub
   tags:
     - sshuserkeys
 
 - name: Deploy ssh user keys
   authorized_key: user={{ item | basename | regex_replace('\.pub$', '') }} key="{{ lookup('file', item) }}"
   with_fileglob:
-    - /etc/ansible/files/civicrm/sshkeys/global/*.pub
+    - ../sshkeys/*.pub
   tags:
     - sshuserkeys
-
 - name: Add priviledged users to sudo group
-  user: name={{ item }} group="sudo" append=yes
+  user: name={{ item }} groups="{{ item }},sudo" group="{{ item }}" append=yes
   with_items: "{{ root_sudoers }}"
   tags:
     - sshuserkeys

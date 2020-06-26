@@ -20,7 +20,7 @@
 #    - mysqlbackup
     - ufw
     - unattended-upgrades
-#    - sshuserkeys
+    - sshuserkeys
   tags:
     - minimum
 - hosts: php-servers

@@ -13,6 +13,7 @@ members.opha.on.ca
 
 [servers:children]
 apache-servers
+icinga-servers
 kvm-servers
 
 [icinga-satellite:children]
