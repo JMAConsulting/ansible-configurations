@@ -36,8 +36,8 @@ $api_key = $options['api-key'];
 $site_key = $options['site-key'];
 $host_address = $options['hostname'];
 // $show_hidden will evaluate to true unless it's a zero.
-$show_hidden = $options['show-hidden'] ?? TRUE;
-$warning_threshold = $options['warning-threshold'] ?? 2;
+$show_hidden = $options['show-hidden'] ?? FALSE;
+$warning_threshold = $options['warning-threshold'] ?? 3;
 $critical_threshold = $options['critical-threshold'] ?? 4;
 $path = $options['path'] ?? NULL;
 $cms = $options['cms'] ?? NULL;
@@ -122,7 +122,6 @@ function systemCheck($prot, $host_address, $path, $site_key, $api_key, $show_hid
 
     $max_severity = 0;
     foreach ($a["values"] as $attrib) {
-
       // Remove excluded checks.
       if (in_array($attrib['name'], $exclude)) {
         continue;
@@ -145,6 +144,7 @@ function systemCheck($prot, $host_address, $path, $site_key, $api_key, $show_hid
       }
       // Skip this item if it doesn't meet the warning threshold
       if ($attrib['severity_id'] < $warning_threshold) {
+        $message[] = filter_var($attrib['title'], FILTER_SANITIZE_STRING) . ': ' . filter_var($attrib['message'], FILTER_SANITIZE_STRING);
         continue;
       }
       $message[] = filter_var($attrib['title'], FILTER_SANITIZE_STRING) . ': ' . filter_var($attrib['message'], FILTER_SANITIZE_STRING);
