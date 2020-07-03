@@ -15,6 +15,7 @@ members.opha.on.ca
 apache-servers
 icinga-servers
 kvm-servers
+gitlab-servers
 
 [icinga-satellite:children]
 servers
@@ -49,3 +50,6 @@ ovh.jmaconsulting.biz
 
 [icinga-servers]
 ovh1.jmaconsulting.biz
+
+[gitlab-servers]
+ovh2.jmaconsulting.biz

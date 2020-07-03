@@ -51,4 +51,9 @@
   tags:
    - icinga2
    - icinga 
-  
+- hosts: gitlab-servers
+  sudo: yes
+  roles:
+    - gitlab
+  tags:
+    - gitlab
