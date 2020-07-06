@@ -6,6 +6,7 @@ root_sudoers:
   - joe
   - edsel
   - monish
+  - calum
 
 unattended_mail_only_on_error: true
 unattended_origins_patterns:
