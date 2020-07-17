@@ -12,6 +12,7 @@
   with_items:
     - backupninja
     - borgbackup
+    - debconf-utils
   tags:
     - packages
 

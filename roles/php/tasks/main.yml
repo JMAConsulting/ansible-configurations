@@ -69,7 +69,8 @@
 
 
 
-- apt: name={{ item }} state=present install_recommends=no
+- name: Install PHP Modules
+  apt: name={{ item }} state=present install_recommends=no
   with_items:
     - php{{ php_version }}-cli
     - php{{ php_version }}-common
@@ -82,6 +83,7 @@
     - php{{ php_version }}-json
     - php{{ php_version }}-ldap
     - php{{ php_version }}-mbstring
+    - php{{ php_version }}-imagick 
     - php{{ php_version }}-mysql
     - php{{ php_version }}-opcache
     - php{{ php_version }}-readline
@@ -104,12 +106,22 @@
   when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
   tags: php
 
-- apache2_module:
+- name: Enable PHP Module
+  apache2_module:
     state: present
-    name: php{{ php_version}}
+    name: php{{ php_version }}
   tags: php
 
-- apache2_module:
+- name: Enable Apache rewrite works
+  apache2_module:
     state: present
     name: rewrite
+  tags: php
+
+- name: Install MariaDB
+  apt: name={{ item }} state=present install_recommends=no
+  with_items:
+    - mariadb-server
+    - mariadb-client
+  when: (ansible_distribution == "Debian")
   tags: php

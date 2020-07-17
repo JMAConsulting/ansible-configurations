@@ -8,7 +8,7 @@
 # Ex: ansible-playbook -u bgm -l civicrm-sushi-spare.osuosl.org --become-user=root --ask-become-pass ./setup.yml
 
 - hosts: all
-  sudo: true
+  become: true
   roles:
     - ansible-setup
 

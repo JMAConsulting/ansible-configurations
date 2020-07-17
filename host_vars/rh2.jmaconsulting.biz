@@ -1,5 +1,3 @@
-php_version: 7.1
-
 ufw_extra_no_port:
   vpn:
     proto: any

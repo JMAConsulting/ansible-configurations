@@ -10,6 +10,7 @@ virt-install --name {{ hostvars[item]['preseed_hostname'] }} \
   --noautoconsole --location 'http://ftp.ca.debian.org/debian/dists/buster/main/installer-amd64/' \
   --autostart \
   --initrd-inject=/etc/preseeds/{{ hostvars[item]['preseed_hostname'] }}.{{ hostvars[item]['preseed_domain'] }}/preseed.cfg
+  --extra-args='console=ttyS0'
 
 # Make sure it boots automatically
 # virsh autostart {{ hostvars[item]['preseed_hostname'] }}

@@ -8,6 +8,9 @@ rh9.jmaconsulting.biz
 oapproviderlist.ca
 ovh.jmaconsulting.biz
 ovh1.jmaconsulting.biz
+ovh2.jmaconsulting.biz
+ovh3.jmaconsulting.biz
+ovh4.jmaconsulting.biz
 environmentalhealth.org
 members.opha.on.ca
 
@@ -32,6 +35,8 @@ oapproviderlist.ca
 environmentalhealth.org
 members.opha.on.ca
 localhost
+ovh3.jmaconsulting.biz
+ovh4.jmaconsulting.biz
 
 [apache-servers]
 rh1.jmaconsulting.biz
@@ -44,6 +49,8 @@ rh9.jmaconsulting.biz
 oapproviderlist.ca
 environmentalhealth.org
 members.opha.on.ca
+ovh3.jmaconsulting.biz
+ovh4.jmaconsulting.biz
 
 [kvm-servers] 
 ovh.jmaconsulting.biz
