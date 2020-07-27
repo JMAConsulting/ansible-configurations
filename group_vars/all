@@ -33,6 +33,6 @@ ufw_icinga_allow_src:
   - 74.50.55.114 # icinga.
   - 192.99.28.88 # New icinga
   - fe80::a800:ccff:fec8:ff9/64 # icinga
-  - 2607:5300:60:260c::/64 # new icinga
+  - 2607:5300:60:260c:100::/64 # new icinga
 
 ufw_ipv4_allow_ssh: true
