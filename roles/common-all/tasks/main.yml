@@ -60,3 +60,20 @@
   tags:
     - common-all
     - common-all-ipv6
+
+- name: clamav | Install clamd
+  apt: name={{ item }} state=present install_recommends=no
+  with_items:
+    - clamav-daemon
+    - clamav-freshclam
+  tags:
+    - common-all
+    - common-all-clamav
+
+- name: clamav | Deploy daily scanning file
+  template: src=etc/cron.daily/clamscan dest=/etc/cron.daily/clamscan owner=root group=root mode=0755
+  when: preseed_hostname is defined
+  tags:
+    - common-all
+    - common-all-clamv
+
