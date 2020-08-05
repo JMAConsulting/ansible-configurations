@@ -18,3 +18,4 @@ preseed_ipv6_gateway: 2607:5300:60:26ff:ff:ff:ff:ff
 preseed_language: en_US
 preseed_country: CA
 preseed_locale: en_US.UTF-8
+kvm_zfs_pool: zx1
