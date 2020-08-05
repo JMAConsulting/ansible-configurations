@@ -66,6 +66,7 @@
   with_items:
     - clamav-daemon
     - clamav-freshclam
+    - clamav
   tags:
     - common-all
     - common-all-clamav
@@ -76,4 +77,3 @@
   tags:
     - common-all
     - common-all-clamv
-

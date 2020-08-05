@@ -16,6 +16,12 @@
   tags:
     - packages
 
+- name: Backupninja | deploy backupninja configuration file
+  template: src="etc/backupninja.conf" dest="/etc/backupninja.conf" mode=0644 owner=root
+  tags:
+    - backup-client
+    - backup-client-configuration
+
 # Deploy backupninja rdiff config to onsite backup-server
 - name: Backupninja | deploy backup templates
   template:
