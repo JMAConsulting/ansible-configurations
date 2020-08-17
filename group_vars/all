@@ -36,3 +36,6 @@ ufw_icinga_allow_src:
   - 2607:5300:60:260c:100::/64 # new icinga
 
 ufw_ipv4_allow_ssh: true
+drush_install: false
+wp_cli_install: false
+cv_install: false

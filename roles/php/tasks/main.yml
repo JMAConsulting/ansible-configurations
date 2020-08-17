@@ -125,3 +125,63 @@
     - mariadb-client
   when: (ansible_distribution == "Debian")
   tags: php
+
+- name: MySQL | Deploy our MySQL configuration overrides
+  template:
+    src=etc/mysql/conf.d/jma.cnf
+    dest=/etc/mysql/conf.d/jma.cnf
+    owner=root group=root mode=0644
+  tags:
+    - php-mysql
+    - php-mariadb
+
+- name: Drush | Install Drush for use on servers
+  get_url:
+    url: https://github.com/drush-ops/drush/releases/download/8.4.0/drush.phar
+    dest: /usr/local/bin/drush
+    mode: 775
+  when: drush_install
+  tags:
+    - php-drush
+
+- name: WP-CLI | Install WP-CLI for use on servers
+  get_url:
+    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: /usr/local/bin/wp
+    mode: 775
+  when: wp_cli_install
+  tags:
+    - php-wp
+
+- name: download composer
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /tmp/installer
+  tags: php-composer
+
+- name: install composer
+  shell: cat /tmp/installer | php -- --install-dir=/usr/local/bin
+  args:
+    creates: /usr/local/bin/composer
+  tags: php-composer
+
+- name: rename composer.phar to composer
+  shell: mv /usr/local/bin/composer.phar /usr/local/bin/composer
+  args:
+    creates: /usr/local/bin/composer
+  tags: php-composer
+
+- name: make composer executable
+  file:
+    path: /usr/local/bin/composer
+    mode: a+x
+    state: file
+  tags: php-composer
+
+- name: CV | Install CV as another tool to use
+  get_url:
+    url: https://download.civicrm.org/cv/cv.phar
+    dest: /usr/local/bin/cv
+    mode: 775
+  when: cv_install
+  tags: php-cv
