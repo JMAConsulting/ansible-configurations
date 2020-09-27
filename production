@@ -16,6 +16,7 @@ ovh5.jmaconsulting.biz
 ovh6.jmaconsulting.biz
 ovh7.jmaconsulting.biz
 ovh8.jmaconsulting.biz
+ovh9.jmaconsulting.biz
 environmentalhealth.org
 members.opha.on.ca
 
@@ -46,6 +47,7 @@ ovh5.jmaconsulting.biz
 ovh6.jmaconsulting.biz
 ovh7.jmaconsulting.biz
 ovh8.jmaconsulting.biz
+ovh9.jmaconsulting.biz
 
 [apache-servers]
 rh1.jmaconsulting.biz
@@ -65,6 +67,7 @@ ovh5.jmaconsulting.biz
 ovh6.jmaconsulting.biz
 ovh7.jmaconsulting.biz
 ovh8.jmaconsulting.biz
+ovh9.jmaconsulting.biz
 
 [kvm-servers] 
 ovh.jmaconsulting.biz
