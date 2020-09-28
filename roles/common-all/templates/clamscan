@@ -22,5 +22,6 @@ for S in ${DIRTOSCAN}; do
  echo "$EMAIL_MSG"|mail -a "{{ preseed_hostname }} : Virus ALERT" -s "Malware Found" -r "$EMAIL_FROM" "$EMAIL_TO";
  fi
 done
+/etc/init.d/clamav-daemon restart
 
 exit 0

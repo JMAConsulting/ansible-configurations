@@ -72,7 +72,23 @@
     - common-all-clamav
 
 - name: clamav | Deploy daily scanning file
-  template: src=etc/cron.daily/clamscan dest=/etc/cron.daily/clamscan owner=root group=root mode=0755
+  template: src=clamscan dest=/root/clamscan owner=root group=root mode=0755
+  when: preseed_hostname is defined
+  tags:
+    - common-all
+    - common-all-clamv
+
+- name: clamav | Deploy clamav scanning cron job file
+  template: src=etc/cron.d/clamscan dest=/etc/cron.d/clamscan
+  when: preseed_hostname is defined
+  tags:
+    - common-all
+    - common-all-clamv
+
+- name: clamav | Ensure original clamav scan job file no longer exists
+  file:
+    path: /etc/cron.daily/clamscan
+    state: absent
   when: preseed_hostname is defined
   tags:
     - common-all

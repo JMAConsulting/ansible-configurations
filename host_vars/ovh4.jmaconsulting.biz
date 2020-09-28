@@ -22,3 +22,4 @@ kvm_zfs_pool: zx1
 drush_install: true
 wp_cli_install: true
 cv_install: true
+clamav_scan_hour: 17

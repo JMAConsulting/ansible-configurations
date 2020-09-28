@@ -21,3 +21,4 @@ preseed_locale: en_US.UTF-8
 kvm_zfs_pool: zx2
 wp_cli_install: true
 cv_install: true
+clamav_scan_hour: 18
