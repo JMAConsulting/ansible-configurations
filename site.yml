@@ -16,6 +16,12 @@
     - php
   tags:
     - php
+- hosts: git-servers
+  become: yes
+  roles:
+    - gitmonitoring
+  tags:
+    - git-monitoring
 - hosts: kvm-servers
   become: yes
   roles:

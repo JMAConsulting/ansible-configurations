@@ -93,3 +93,15 @@
   tags:
     - common-all
     - common-all-clamv
+
+- name: set umask to 002 in .profile
+  lineinfile: 'dest=/home/{{ item }}/.profile state=present regexp="^umask\s+\d+" insertafter=EOF line="umask 002" create=yes'
+  loop:
+    - seamus
+    - calum
+    - joe
+    - edsel
+    - monish
+  tags:
+    - common-all
+    - common-all-umask

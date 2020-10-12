@@ -22,3 +22,6 @@ kvm_zfs_pool: zx2
 drush_install: true
 cv_install: true
 clamav_scan_hour: 21
+git_repos:
+ - { name: "vermont-progressive-party", path: "/home/vermontprogressiveparty.org/htdocs"}
+ - { name: "Zuckerman-for-vt", path: "/home/mail.zuckermanforvt.com/htdocs"}

@@ -1,0 +1,5 @@
+- name: "git monitoring | deploy git cron job for each site to monitor for changes"
+  template: src=etc/cron.d/gitcron dest=/etc/cron.d/gitcron-{{ item.name }} owner=root group=root mode=0664
+  with_items: "{{ git_repos }}"
+  tags:
+    - git-monitoring-cron
