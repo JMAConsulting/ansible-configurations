@@ -1,1 +1,1 @@
-* 5 * * * git --git-dir "{{ item.path }}/.git" --work-tree "{{ item.path }}" ls-files -s -t -u -d -m -o --exclude-standard
+10 5 * * * git --git-dir "{{ item.path }}/.git" --work-tree "{{ item.path }}" ls-files -s -t -u -d -m -o --exclude-standard
