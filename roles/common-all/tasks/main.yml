@@ -105,3 +105,11 @@
   tags:
     - common-all
     - common-all-umask
+
+- name: Add in wwweditors group
+  group:
+    name: "www-editors"
+    state: present
+  tags:
+    - common-all
+    - common-all-group

@@ -1,6 +1,6 @@
 ---
 icinga2_main_node: icinga.jmaconsulting.biz
-
+aegir_sudoers: seamus,joe,calum,monish,edsel
 root_sudoers:
   - seamus
   - joe
@@ -39,3 +39,4 @@ ufw_ipv4_allow_ssh: true
 drush_install: false
 wp_cli_install: false
 cv_install: false
+tripwire_config_dir: "/etc/tripwire"

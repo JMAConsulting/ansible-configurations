@@ -38,6 +38,8 @@ kvm_main_ipv6_netmask: "64"
 kvm_main_ipv6_dns: "2001:41d0:3:163::1"
 kvm_main_ipv6_gateway: "2607:5300:0203:81ff:ff:ff:ff:ff"
 
-kvm_zfs_pool: zb1
+kvm_zfs_pool: zxb
 
 kvm_hosts:
+  - b1.jmaconsulting.biz
+  - b2.jmaconsulting.biz

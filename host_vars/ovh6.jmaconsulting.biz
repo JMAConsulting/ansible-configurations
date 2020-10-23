@@ -23,3 +23,6 @@ wp_cli_install: true
 drush_install: true
 cv_install: true
 clamav_scan_hour: 19
+git_repos:
+ - { name: "acorn-primary", path: "/home/acorncanada.org/htdocs"}
+ - { name: "acorn-debtresources", path: "/home/debtresources.acorncanada.org/htdocs"}

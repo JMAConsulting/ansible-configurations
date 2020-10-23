@@ -1,0 +1,4 @@
+wp_cli_install: true
+cv_install: true
+git_repos:
+ - { name: "members-opha", path: "/var/www/members.opha.on.ca/htdocs"}

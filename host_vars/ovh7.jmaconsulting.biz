@@ -23,3 +23,6 @@ wp_cli_install: true
 drush_install: true
 cv_install: true
 clamav_scan_hour: 20
+git_repos:
+ - { name: "weownit-d8", path: "/home/weownit.org/htdocs"}
+ - { name: "organize-weownit-wp", path: "/home/organize.weownit.org/htdocs"}

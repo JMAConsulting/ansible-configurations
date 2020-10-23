@@ -1,0 +1,41 @@
+- name: Keycloak | Install necessary apt pacakges
+  apt: name={{ item }} state=present install_recommends=no
+  with_items:
+    - default-jdk
+    - apache2
+    - python-certbot-apache
+    - certbot
+  tags:
+    - packages
+    - keycloak
+
+- name: keycloak | add keycloak group
+  group: name=keycloak state=present
+  tags:
+    - keycloak
+
+- name: Keycloak | add in user and group for keycloak
+  user: name=keycloak home=/opt/keycloak shell=/sbin/nologin create_home=no group=keycloak
+  tags:
+    - keycloak
+
+- name: keycloak | enable apache proxy module
+  apache2_module:
+    name: proxy
+    state: present
+  tags:
+    - keycloak
+
+- name: keycloak | enable apache http proxy module
+  apache2_module:
+    name: proxy_http
+    state: present
+  tags:
+    - keycloak
+
+- name: keycloak | enable apache headers module
+  apache2_module:
+    name: headers
+    state: present
+  tags:
+    - keycloak

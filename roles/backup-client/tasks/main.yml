@@ -16,8 +16,17 @@
   tags:
     - packages
 
+- name: Install the Icinga-aware fork
+  copy:
+    force: yes
+    src: files/backupninja
+    dest: /usr/sbin/backupninja
+  tags:
+    - backup-client
+    - backup-client-backupninja
+
 - name: Backupninja | deploy backupninja configuration file
-  template: src="etc/backupninja.conf" dest="/etc/backupninja.conf" mode=0644 owner=root
+  template: src="etc/backupninja.conf" dest="/etc/backupninja.conf" mode=0644 owner=root force=no
   tags:
     - backup-client
     - backup-client-configuration

@@ -14,7 +14,7 @@
   tags:
     - sshuserkeys
 - name: Add priviledged users to sudo and adm groups
-  user: name={{ item }} groups="{{ item }},sudo,adm" group="{{ item }}" append=yes
+  user: name={{ item }} groups="{{ item }},sudo,adm,www-editors" group="{{ item }}" append=yes
   with_items: "{{ root_sudoers }}"
   tags:
     - sshuserkeys

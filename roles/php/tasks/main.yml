@@ -67,8 +67,6 @@
   when: (ansible_distribution == "Debian")
   tags: php
 
-
-
 - name: Install PHP Modules
   apt: name={{ item }} state=present install_recommends=no
   with_items:
@@ -116,6 +114,13 @@
   apache2_module:
     state: present
     name: rewrite
+  tags: php
+
+- name: Add www-data into www-editors group
+  user:
+    name: 'www-data'
+    groups: 'www-data,www-editors'
+    append: yes
   tags: php
 
 - name: Install MariaDB
