@@ -64,6 +64,16 @@
   tags:
     - tripwire
 
+- name: "Deploy our customised policy"
+  template:
+    src: etc/tripwire/twpol.txt
+    dest: /etc/tripwire/twpol.txt
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - tripwire
+
 - name: "Encrypt Tripwire Configuration"
   command: twadmin --create-cfgfile --site-keyfile "{{ tripwire_config_dir }}/site.key" --site-passphrase  "/root/.sitekey.tripwire" "{{ tripwire_config_dir }}/twcfg.txt"
   tags:
