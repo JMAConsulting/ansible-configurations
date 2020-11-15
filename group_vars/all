@@ -30,10 +30,8 @@ ufw_nrpe_allow_src:
   - 162.13.43.63/32
 
 ufw_icinga_allow_src:
-  - 74.50.55.114 # icinga.
-  - 192.99.28.88 # New icinga
-  - fe80::a800:ccff:fec8:ff9/64 # icinga
-  - 2607:5300:60:260c:100::/64 # new icinga
+  - 192.99.28.88 # icinga.jmaconsulting.biz
+  - 2607:5300:60:260c:100::/64 # icinga.jmaconsulting.biz
 
 ufw_ipv4_allow_ssh: true
 drush_install: false
