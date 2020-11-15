@@ -113,3 +113,10 @@
   tags:
     - common-all
     - common-all-group
+
+- name: Deploy standard sshd config file
+  template: src=etc/ssh/sshd_config dest=/etc/ssh/sshd_config
+  notify: restart sshd
+  tags:
+    - common-all
+    - common-all-ssh

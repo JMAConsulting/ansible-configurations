@@ -7,6 +7,14 @@
 # Makes it easier to eventually switch between different versions (ex: 5.6).
 # TODO: cleanup so that we have only one PHP role for all versions.
 
+- name: show the groups the host(s) are in
+  debug:
+    msg: "{{group_names}}"
+  when: "'apache-serves' not in group_names"
+  tags:
+    - php
+    - php-apache
+
 - apt: name={{ item }} state=present install_recommends=no
   with_items:
     python-apt
@@ -93,49 +101,114 @@
     - php{{ php_version }}-xsl
     - php{{ php_version }}-zip
     - php{{ php_version }}-bcmath
-    - apache2
-    - libapache2-mod-php{{ php_version }}
   tags: php
+
+- name: Install apache webserver
+  apt: name={{ item }} state=present install_recommends=no
+  with_items:
+    - apache
+    - libapache2-mod-php{{ php_version }}
 
 - apt: name={{ item }} state=present install_recommends=no
   with_items:
     - certbot
     - python3-certbot-apache
-  when: (ansible_distribution == "Ubuntu") and (ansible_lsb.major_release < "20")
-  tags: php
+  when: "'apache-servers' in group_names"
+  tags: 
+    - php-apache
+    - php
+
+- apt: name={{ item }} state=absent install_recommends=no
+  with_items:
+    - apache
+    - libapache2-mod-php{{ php_version }}
+    - python3-certbot-apache
+  when: "'apache-servers' not in group_names"
+  tags:
+    - php-nginx
+    - php
 
 - name: Enable PHP Module
   apache2_module:
     state: present
     name: php{{ php_version }}
+  notify: restart apache
+  when: "'apache-servers' in group_names"
   tags: php
 
 - name: Enable Apache rewrite works
   apache2_module:
     state: present
     name: rewrite
-  tags: php
+  notify: restart apache
+  when: ("'apache-servers' in group_names")
+  tags: 
+    - php
+    - php-apache
 
 - name: Add www-data into www-editors group
   user:
     name: 'www-data'
     groups: 'www-data,www-editors'
     append: yes
-  tags: php
+  tags: 
+    - php
+    - php-apache
+    - php-nginx
 
-- name: Install MariaDB
-  apt: name={{ item }} state=present install_recommends=no
-  with_items:
-    - mariadb-server
-    - mariadb-client
+- name: Ensure that apache www-data umask is set right
+  lineinfile:
+    path: /etc/apache2/envvars
+    line: 'umask 0002'
+    insertbefore: BOF
+  when: ("'apache-servers' in group_names")
+  notify: restart apache
+  tags:
+    - php
+    - php-apache
+
+- name: Debian | Add MariaDB apt key
+  apt_key:
+    url: "https://mariadb.org/mariadb_release_signing_key.asc"
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/mariadb.gpg
+  when: ansible_distribution == "Debian"
+  tags:
+    - php-mariadb
+
+- apt_repository:
+    repo="deb [arch=amd64,arm64,ppc64el] https://mirror.rackspace.com/mariadb/repo/{{ mariadb_version }}/debian {{ ansible_distribution_release }} main"
+    state=present
+    update_cache=yes
   when: (ansible_distribution == "Debian")
-  tags: php
+  tags: 
+    - php-mariadb
+
+
+#- name: Install MariaDB
+#  apt: name={{ item }} state=present install_recommends=no
+#  with_items:
+#    - mariadb-server
+#    - mariadb-client
+#  when: (ansible_distribution == "Debian")
+#  tags: 
+#    - php-mariadb
 
 - name: MySQL | Deploy our MySQL configuration overrides
   template:
     src=etc/mysql/conf.d/jma.cnf
     dest=/etc/mysql/conf.d/jma.cnf
     owner=root group=root mode=0644
+  tags:
+    - php-mysql
+    - php-mariadb
+
+- name: MySQL | Deploy our MySQL configuration overrides
+  template:
+    src=etc/mysql/conf.d/jma.cnf
+    dest=/etc/mysql/mariadb.conf.d/60-jma.cnf
+    owner=root group=root mode=0644
+  when: (ansible_distribution == "Debian")
   tags:
     - php-mysql
     - php-mariadb

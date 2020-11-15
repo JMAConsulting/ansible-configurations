@@ -1,6 +1,7 @@
 # {{ ansible_managed }}
 
 [mysqld]
+plugin_load_add = auth_socket
 table_cache            = 8192
 open_files_limit       = 25000
 

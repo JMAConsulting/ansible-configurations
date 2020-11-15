@@ -40,3 +40,4 @@ drush_install: false
 wp_cli_install: false
 cv_install: false
 tripwire_config_dir: "/etc/tripwire"
+mariadb_version: "10.3"
