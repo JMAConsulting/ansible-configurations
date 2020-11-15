@@ -31,6 +31,18 @@
   tags:
     - tripwire
 
+- name: Register Site Key variable
+  shell: cat /root/.sitekey.tripwire
+  register: tripwire_sitekey
+  tags:
+    - tripwire
+
+- name: Register local key variable
+  shell: cat /root/.localkey.tripwire
+  register: tripwire_localkey
+  tags:
+    - tripwire
+
 - name: Install tripwire
   apt:
     name: "tripwire"
@@ -55,12 +67,12 @@
     - tripwire
 
 - name: "Generate Tripwire Host Key"
-  command: twadmin --generate-keys --local-keyfile "{{ tripwire_config_dir }}/{{ ansible_hostname }}-local.key" --local-passphrase "/root/.localkey.tripwire"
+  command: twadmin --generate-keys --local-keyfile "{{ tripwire_config_dir }}/{{ ansible_hostname }}-local.key" --local-passphrase "{{ tripwire_localkey.stdout }}"
   tags:
    - tripwire
 
 - name: "Generate Tripwire Site Key"
-  command: twadmin --generate-keys --site-keyfile "{{ tripwire_config_dir }}/site.key" --site-passphrase  "/root/.sitekey.tripwire"
+  command: twadmin --generate-keys --site-keyfile "{{ tripwire_config_dir }}/site.key" --site-passphrase  "{{ tripwire_sitekey.stdout }}"
   tags:
     - tripwire
 
@@ -75,17 +87,17 @@
     - tripwire
 
 - name: "Encrypt Tripwire Configuration"
-  command: twadmin --create-cfgfile --site-keyfile "{{ tripwire_config_dir }}/site.key" --site-passphrase  "/root/.sitekey.tripwire" "{{ tripwire_config_dir }}/twcfg.txt"
+  command: twadmin --create-cfgfile --site-keyfile "{{ tripwire_config_dir }}/site.key" --site-passphrase  "{{ tripwire_sitekey.stdout }}" "{{ tripwire_config_dir }}/twcfg.txt"
   tags:
    - tripwire
 
 - name: "Encrypt Tripwire Policy"
-  command: twadmin --create-polfile --site-passphrase '/root/.sitekey.tripwire' "{{ tripwire_config_dir }}/twpol.txt"
+  command: twadmin --create-polfile --site-passphrase "{{ tripwire_sitekey.stdout }}" "{{ tripwire_config_dir }}/twpol.txt"
   tags:
    - tripwire
 
 - name: "Tripwire Initial Database"
-  shell: tripwire --init -P "/root/.localkey.tripwire"
+  shell: tripwire --init -P "{{ tripwire_localkey.stdout }}"
   tags:
     - tripwire
 

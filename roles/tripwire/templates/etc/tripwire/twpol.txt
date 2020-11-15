@@ -180,9 +180,9 @@ SIG_HI        = 100 ;                # Critical files that are
   emailto = support@jmaconsulting.biz
 )
 {
-#        /var/lock               -> $(SEC_CONFIG) ;
+        !/var/lock;
         /var/run                -> $(SEC_CONFIG) ; # daemon PIDs
-#        /var/log                -> $(SEC_CONFIG) ;
+        !/var/log;
 }
 
 # These files change the behavior of the root account
@@ -193,30 +193,34 @@ SIG_HI        = 100 ;                # Critical files that are
 )
 {
         /root                           -> $(SEC_CRIT) ; # Catch all additions to /root
-        /root/mail                      -> $(SEC_CONFIG) ;
-        /root/Mail                      -> $(SEC_CONFIG) ;
-        /root/.xsession-errors          -> $(SEC_CONFIG) ;
-        /root/.xauth                    -> $(SEC_CONFIG) ;
-        /root/.tcshrc                   -> $(SEC_CONFIG) ;
-        /root/.sawfish                  -> $(SEC_CONFIG) ;
-        /root/.pinerc                   -> $(SEC_CONFIG) ;
-        /root/.mc                       -> $(SEC_CONFIG) ;
-        /root/.gnome_private            -> $(SEC_CONFIG) ;
-        /root/.gnome-desktop            -> $(SEC_CONFIG) ;
-        /root/.gnome                    -> $(SEC_CONFIG) ;
-        /root/.esd_auth                 -> $(SEC_CONFIG) ;
-        /root/.elm                      -> $(SEC_CONFIG) ;
-        /root/.cshrc                    -> $(SEC_CONFIG) ;
-        /root/.bashrc                   -> $(SEC_CONFIG) ;
-        /root/.bash_profile             -> $(SEC_CONFIG) ;
-        /root/.bash_logout              -> $(SEC_CONFIG) ;
-        /root/.bash_history             -> $(SEC_CONFIG) ;
-        /root/.amandahosts              -> $(SEC_CONFIG) ;
-        /root/.addressbook.lu           -> $(SEC_CONFIG) ;
-        /root/.addressbook              -> $(SEC_CONFIG) ;
-        /root/.Xresources               -> $(SEC_CONFIG) ;
-        /root/.Xauthority               -> $(SEC_CONFIG) -i ; # Changes Inode number on login
-        /root/.ICEauthority                 -> $(SEC_CONFIG) ;
+        !/root/.cache;
+        !/root/.config;
+        !/root/.gnupg;
+        !/root/mail;
+        !/root/Mail;
+        !/root/.xsession-errors;
+        !/root/.xauth;
+        !/root/.tcshrc;
+        !/root/.sawfish;
+        !/root/.pinerc;
+        !/root/.mc;
+        !/root/.gnome_private;
+        !/root/.gnome-desktop;
+        !/root/.gnome;
+        !/root/.esd_auth;
+        !/root/.elm;
+        !/root/.cshrc;
+        !/root/.bashrc;
+        !/root/.bash_profile;
+        !/root/.bash_logout;
+        !/root/.bash_history;
+        !/root/.amandahosts;
+        !/root/.addressbook.lu;
+        !/root/.addressbook;
+        !/root/.Xresources;
+        !/root/.Xauthority;
+        !/root/.ICEauthority;
+        !/root/.viminfo;
 }
 
 #
@@ -242,6 +246,8 @@ SIG_HI        = 100 ;                # Critical files that are
 )
 {
         /etc            -> $(SEC_BIN) ;
+        !/etc/.git;
+        !/etc/.etckeeper;
 }
 
 #
