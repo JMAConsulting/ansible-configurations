@@ -1,23 +1,20 @@
 ---
 
 - name: Create system users
-  user: name={{ item | basename | regex_replace('\.pub$', '') }} shell="/bin/bash"
-  with_fileglob:
-    - ../sshkeys/*.pub
+  user: name={{ item | basename }} shell="/bin/bash"
+  with_items: "{{ ssh_users }}"
   tags:
     - sshuserkeys
 
 - name: Deploy ssh user keys
-  authorized_key: user={{ item | basename | regex_replace('\.pub$', '') }} key="{{ lookup('file', item) }}"
-  with_fileglob:
-    - ../sshkeys/*.pub
+  authorized_key: user={{ item }} key="{{ lookup('file', '../sshkeys/' + item + '.pub') }}"
+  with_items: "{{ ssh_users }}"
   tags:
     - sshuserkeys
-- name: Add priviledged users to sudo and adm groups
+
+- name: Add priviledged users to sudo, adm, www-editors groups.
   user: name={{ item }} groups="{{ item }},sudo,adm,www-editors" group="{{ item }}" append=yes
   with_items: "{{ root_sudoers }}"
   tags:
     - sshuserkeys
     - sshuserkeys-sudoers
-
-# TODO: per-server, ex: /etc/ansible/files/sshkeys/{{ inventory_hostname }}/*.pub

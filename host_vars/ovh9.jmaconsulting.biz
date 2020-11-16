@@ -25,3 +25,9 @@ clamav_scan_hour: 21
 git_repos:
  - { name: "vermont-progressive-party", path: "/home/vermontprogressiveparty.org/htdocs"}
  - { name: "Zuckerman-for-vt", path: "/home/mail.zuckermanforvt.com/htdocs"}
+ssh_users:
+ - seamus
+ - joe
+ - morgan
+ - edsel
+ - monish

@@ -1,12 +1,11 @@
 ---
 icinga2_main_node: icinga.jmaconsulting.biz
-aegir_sudoers: seamus,joe,calum,monish,edsel
+aegir_sudoers: seamus,joe,monish,edsel
 root_sudoers:
   - seamus
   - joe
   - edsel
   - monish
-  - calum
 
 unattended_mail_only_on_error: true
 unattended_origins_patterns:
@@ -39,3 +38,8 @@ wp_cli_install: false
 cv_install: false
 tripwire_config_dir: "/etc/tripwire"
 mariadb_version: "10.3"
+ssh_users:
+  - seamus
+  - joe
+  - edsel
+  - monish
