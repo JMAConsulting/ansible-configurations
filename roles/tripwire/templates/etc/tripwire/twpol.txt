@@ -221,6 +221,8 @@ SIG_HI        = 100 ;                # Critical files that are
         !/root/.Xauthority;
         !/root/.ICEauthority;
         !/root/.viminfo;
+        !/root/.nano;
+        !/root/.mysql_history;
 }
 
 #
@@ -248,6 +250,7 @@ SIG_HI        = 100 ;                # Critical files that are
         /etc            -> $(SEC_BIN) ;
         !/etc/.git;
         !/etc/.etckeeper;
+        !/etc/letsencrypt; # If something changed here then icinga ssl notificaton should pick it up
 }
 
 #

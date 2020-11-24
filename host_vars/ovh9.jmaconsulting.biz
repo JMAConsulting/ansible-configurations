@@ -31,3 +31,4 @@ ssh_users:
  - morgan
  - edsel
  - monish
+mariadb_version: "10.5"

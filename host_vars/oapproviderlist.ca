@@ -2,3 +2,9 @@ drush_install: true
 cv_install: true
 git_repos:
  - { name: "oap-production", path: "/var/www/oapproviderlist.ca"}
+ssh_users:
+  - seamus
+  - joe
+  - edsel
+  - monish
+  - sierra

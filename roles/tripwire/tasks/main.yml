@@ -1,4 +1,4 @@
-- name: Install pwgen
+- name: "Install pwgen"
   apt:
     name: "pwgen"
     state: present
@@ -7,43 +7,43 @@
     - packages
     - tripwire
 
-- name: Check that the site password file exists
+- name: "Check that the site password file exists"
   stat: path="/root/.sitekey.tripwire"
   register: site_result
   tags:
     - tripwire
 
-- name: Check that the site password file exists
+- name: "Check that the site password file exists"
   stat: path="/root/.localkey.tripwire"
   register: local_result
   tags:
     - tripwire
 
-- name: Generate a site password for tripwire
+- name: "Generate a site password for tripwire"
   shell: pwgen 32 1 > /root/.sitekey.tripwire
   when: not site_result.stat.exists
   tags: 
     - tripwire
 
-- name: Generate a local password for tripwire
+- name: "Generate a local password for tripwire"
   shell: pwgen 32 1 > /root/.localkey.tripwire
   when: not local_result.stat.exists
   tags:
     - tripwire
 
-- name: Register Site Key variable
+- name: "Register Site Key variable"
   shell: cat /root/.sitekey.tripwire
   register: tripwire_sitekey
   tags:
     - tripwire
 
-- name: Register local key variable
+- name: "Register local key variable"
   shell: cat /root/.localkey.tripwire
   register: tripwire_localkey
   tags:
     - tripwire
 
-- name: Install tripwire
+- name: "Install tripwire"
   apt:
     name: "tripwire"
     state: present
@@ -80,6 +80,16 @@
   template:
     src: etc/tripwire/twpol.txt
     dest: /etc/tripwire/twpol.txt
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - tripwire
+
+- name: "Deploy our customised configuraton"
+  template:
+    src: etc/tripwire/twcfg.txt
+    dest: /etc/tripwire/twcfg.txt
     owner: root
     group: root
     mode: 0644
