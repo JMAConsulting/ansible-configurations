@@ -18,3 +18,10 @@
   tags:
     - sshuserkeys
     - sshuserkeys-sudoers
+
+- name: remove old system users
+  user: name={{ item | basename }} state=absent
+  with_items: "{{ past_jma_staff }}"
+  tags:
+    - sshuserkeys
+    - sshuserkeys-past-staff

@@ -44,3 +44,5 @@ ssh_users:
   - edsel
   - monish
 report_email_address: "support@jmaconsulting.biz"
+past_jma_staff:
+  - calum

@@ -24,3 +24,10 @@ cv_install: true
 clamav_scan_hour: 16
 git_repos:
  - {name: "cagis-production", path: "/home/girlsinscience.ca/htdocs"}
+ssh_users:
+  - seamus
+  - joe
+  - edsel
+  - monish
+  - myriam
+mariadb_version: "10.5"
