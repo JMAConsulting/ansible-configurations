@@ -23,4 +23,4 @@ wp_cli_install: true
 cv_install: true
 clamav_scan_hour: 18
 git_repos:
- - { name: "acop", path: "/home/my.acop.ca/htdocs"}
+ - { name: "acop", path: "/home/my.acop.ca/htdocs", report_email_address: "help+jma-acop-acop-53-issue-@jmaconsulting.biz"}

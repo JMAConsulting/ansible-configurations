@@ -23,8 +23,8 @@ drush_install: true
 cv_install: true
 clamav_scan_hour: 21
 git_repos:
- - { name: "vermont-progressive-party", path: "/home/vermontprogressiveparty.org/htdocs"}
- - { name: "Zuckerman-for-vt", path: "/home/mail.zuckermanforvt.com/htdocs"}
+ - { name: "vermont-progressive-party", path: "/home/vermontprogressiveparty.org/htdocs", report_email_address: "help+jma-zfv-zfv-70-issue-@jmaconsulting.biz"}
+ - { name: "Zuckerman-for-vt", path: "/home/mail.zuckermanforvt.com/htdocs", report_email_address: "help+jma-vpp-69-issue-@jmaconsulting.biz"}
 ssh_users:
  - seamus
  - joe

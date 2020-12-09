@@ -24,5 +24,5 @@ drush_install: true
 cv_install: true
 clamav_scan_hour: 20
 git_repos:
- - { name: "weownit-d8", path: "/home/weown.it"}
- - { name: "organize-weownit-wp", path: "/home/organize.weown.it/htdocs"}
+ - { name: "weownit-d8", path: "/home/weown.it", report_email_address: "help+jma-weown-it-weown-it-49-issue-@jmaconsulting.biz"}
+ - { name: "organize-weownit-wp", path: "/home/organize.weown.it/htdocs", report_email_address: "help+jma-weown-it-organize-weownit-66-issue-@jmaconsulting.biz"}

@@ -1,7 +1,7 @@
 drush_install: true
 cv_install: true
 git_repos:
- - { name: "oap-production", path: "/var/www/oapproviderlist.ca"}
+ - { name: "oap-production", path: "/var/www/oapproviderlist.ca", report_email_address: "help+jma-autism-ontario-oap-support-153-issue-@jmaconsulting.biz"}
 ssh_users:
   - seamus
   - joe
