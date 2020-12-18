@@ -91,8 +91,8 @@
 - name: Preseed Aegir Debian configurations
   shell: "{{ item }} | debconf-set-selections"
   with_items:
-    - echo "mariadb-server-10.3 mysql-server/root_password password `cat /root/.mysql.root`"
-    - echo "mariadb-server-10.3 mysql-server/root_password_again password `cat /root/.mysql.root`"
+    - echo "mariadb-server-10.5 mysql-server/root_password password `cat /root/.mysql.root`"
+    - echo "mariadb-server-10.5 mysql-server/root_password_again password `cat /root/.mysql.root`"
     - echo "debconf aegir/site string {{ inventory_hostname }}"
     - echo "debconf aegir/db_host string 127.0.0.1"
     - echo "debconf aegir/db_user string root"
@@ -205,7 +205,7 @@
 - copy: content="{{ inventory_hostname }}" dest=/etc/mailname
 - file: path=/etc/mailname owner=root group=root mode=0644
 
-# MariaDB 10.3
+# MariaDB 10.5
 - apt_key: keyserver=keyserver.ubuntu.com id=0xF1656F24C74CD1D8
   tags:
     - packages
@@ -213,7 +213,7 @@
     - aegir-mariadb
 
 - apt_repository:
-    repo="deb http://ftp.osuosl.org/pub/mariadb/repo/10.3/debian {{ ansible_distribution_release }} main"
+    repo="deb http://ftp.osuosl.org/pub/mariadb/repo/10.5/debian {{ ansible_distribution_release }} main"
     update_cache=yes
     state=present
   tags:
@@ -223,8 +223,8 @@
 
 - apt:
     name: [
-      "mariadb-client-10.3",
-      "mariadb-server-10.3",
+      "mariadb-client-10.5",
+      "mariadb-server-10.5",
       "mariadb-server"
     ]
     state: present

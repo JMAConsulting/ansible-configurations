@@ -26,3 +26,4 @@ clamav_scan_hour: 19
 git_repos:
  - { name: "acorn-primary", path: "/home/acorncanada.org/htdocs", report_email_address: "help+jma-acorn-canada-acorn-canada-5-issue-@jmaconsulting.biz"}
  - { name: "acorn-debtresources", path: "/home/debtresources.acorncanada.org/htdocs", report_email_address: "help+jma-acorn-canada-debtresources-68-issue-@jmaconsulting.biz"}
+mariadb_version: "10.5"
