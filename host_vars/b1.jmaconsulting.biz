@@ -26,3 +26,4 @@ clamav_scan_hour: 16
 #    port: 8080
 #    rule: allow
 #    description: 'Allow access to Keycloak service'
+mariadb_version: "10.5"

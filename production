@@ -40,6 +40,7 @@ ovh6.jmaconsulting.biz
 ovh7.jmaconsulting.biz
 ovh8.jmaconsulting.biz
 ovh9.jmaconsulting.biz
+b1.jmaconsulting.biz
 
 [apache-servers]
 rh2.jmaconsulting.biz
@@ -53,6 +54,7 @@ ovh6.jmaconsulting.biz
 ovh7.jmaconsulting.biz
 ovh8.jmaconsulting.biz
 ovh9.jmaconsulting.biz
+b1.jmaconsulting.biz
 
 [kvm-servers] 
 ovh.jmaconsulting.biz

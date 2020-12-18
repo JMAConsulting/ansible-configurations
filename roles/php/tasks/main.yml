@@ -106,7 +106,7 @@
 - name: Install apache webserver
   apt: name={{ item }} state=present install_recommends=no
   with_items:
-    - apache
+    - apache2
     - libapache2-mod-php{{ php_version }}
 
 - apt: name={{ item }} state=present install_recommends=no
@@ -185,14 +185,16 @@
     - php-mariadb
 
 
-#- name: Install MariaDB
-#  apt: name={{ item }} state=present install_recommends=no
-#  with_items:
-#    - mariadb-server
-#    - mariadb-client
-#  when: (ansible_distribution == "Debian")
-#  tags: 
-#    - php-mariadb
+- name: Install MariaDB
+  apt: name={{ item }} state=present install_recommends=no
+  with_items:
+    - mariadb-server
+    - mariadb-server-{{ mariadb_version }}
+    - mariadb-client
+    - mariadb-client-{{ mariadb_version }}
+  when: (ansible_distribution == "Debian")
+  tags: 
+    - php-mariadb
 
 - name: MySQL | Deploy our MySQL configuration overrides
   template:
