@@ -46,3 +46,4 @@ ssh_users:
 report_email_address: "support@jmaconsulting.biz"
 past_jma_staff:
   - calum
+ansible_http_host: false

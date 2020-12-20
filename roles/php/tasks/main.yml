@@ -167,6 +167,52 @@
     - php
     - php-apache
 
+- name: Ubuntu | Install Percona key
+  apt_key: keyserver=keys.gnupg.net id=8507EFA5 state=present
+  when: ("'percona-servers' in group_names")
+  tags:
+    - php
+    - php-percona
+
+- name: ubuntu | install percona repository
+  apt_repository: repo="deb http://repo.percona.com/apt {{ ansible_distribution_release }}  main" state=present
+  when: ("'percona-servers' in group_names")
+  tags:
+    - php
+    - php-percona
+
+- name: ubuntu | install percona soruce repository
+  apt_repository: repo="deb-src http://repo.percona.com/apt {{ ansible_distribution_release }} main" state=present
+  when: ("'percona-servers' in group_names")
+  tags:
+    - php
+    - php-percona
+
+- name: ubuntu | Install python packages
+  apt: pkg={{ item }} state=present
+  with_items:
+    - vim
+    - python-pycurl
+    - python-mysqldb
+  when: ("'percona-servers' in group_names")
+  tags:
+    - php
+    - php-percona
+
+- name: ubuntu | Install Percona packages
+  sudo: yes
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items:
+    - percona-server-common-5.7
+    - percona-server-client-5.7
+    - percona-server-server-5.7
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+  when: ("'percona-servers' in group_names")
+  tags:
+    - php
+    - php-percona
+
 - name: Debian | Add MariaDB apt key
   apt_key:
     url: "https://mariadb.org/mariadb_release_signing_key.asc"
