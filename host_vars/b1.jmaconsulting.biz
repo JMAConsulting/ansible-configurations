@@ -27,3 +27,6 @@ clamav_scan_hour: 16
 #    rule: allow
 #    description: 'Allow access to Keycloak service'
 mariadb_version: "10.5"
+icinga2_display_name: "b1"
+icinga2_ipv4_address: "192.99.84.208"
+icinga2_ipv6_address: "2607:5300:203:815e:100::"

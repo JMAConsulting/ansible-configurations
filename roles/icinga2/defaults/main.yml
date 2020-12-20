@@ -16,3 +16,9 @@ icinga2_user: nagios
 
 icinga2_cert_dir: "/etc/icinga2/pki"
 icinga2_plugin_dir: "/usr/lib/nagios/plugins"
+icinga2_http_host: false
+icinga2_cms_check: false
+icinga2_civicrm_check: false
+icinga2_ipv6_address: "::1"
+icinga2_server_warning_procs: "1050"
+icinga2_server_critical_procs: "1100"

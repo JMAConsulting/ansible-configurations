@@ -43,3 +43,6 @@ kvm_zfs_pool: zxb
 kvm_hosts:
   - b1.jmaconsulting.biz
   - b2.jmaconsulting.biz
+
+icinga2_display_name: "b Second Host server"
+icinga2_ipv4_address: "51.222.80.94"

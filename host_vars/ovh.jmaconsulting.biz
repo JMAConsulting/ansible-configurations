@@ -52,3 +52,6 @@ kvm_hosts:
  - ovh7.jmaconsulting.biz
  - ovh8.jmaconsulting.biz
  - ovh9.jmaconsulting.biz
+
+icinga2_display_name: "OVH"
+icinga2_ipv4_address: "198.27.75.12"

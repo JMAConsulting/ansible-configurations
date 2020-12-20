@@ -32,3 +32,7 @@ ssh_users:
  - edsel
  - monish
 mariadb_version: "10.5"
+icinga2_http_host: "zuckermanforvt.jmaconsulting.biz"
+icinga2_display_name: "OVH9 jmaconsulting.biz"
+icinga2_ipv4_address: "192.99.122.141"
+icinga2_ipv6_address: "2607:5300:60:260c:900::"

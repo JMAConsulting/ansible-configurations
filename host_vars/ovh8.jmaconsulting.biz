@@ -29,3 +29,7 @@ ssh_users:
   - monish
   - myriam
 mariadb_version: "10.5"
+icinga2_http_host: "ovh8.jmaconsulting.biz"
+icinga2_display_name: "OVH8 jmaconsulting.biz"
+icinga2_ipv4_address: "192.99.122.140"
+icinga2_ipv6_address: "2607:5300:60:260c:800::"

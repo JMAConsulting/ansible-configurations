@@ -20,3 +20,7 @@ preseed_country: CA
 preseed_locale: en_US.UTF-8
 kvm_zfs_pool: zx1
 clamav_scan_hour: 18
+icinga2_display_name: "OVH2 gitlab"
+icinga2_ipv4_address: "192.99.28.89"
+icinga2_ipv6_address: "2607:5300:60:260c:200::"
+icinga2_http_host: "lab.jmaconsulting.biz"

@@ -28,7 +28,7 @@
     - icinga2-mysql
 
 - name: Deploy icinga2 basic configuration files
-  template: src="etc/icinga2/{{ item }}" dest="/etc/icinga2/{{ item }}" owner=root group=root mode=0644
+  template: src="etc/icinga2/{{ item }}" dest="/etc/icinga2/{{ item }}" owner="{{ icinga2_user }}" group="{{ icinga2_user }}" mode=0644
   with_items:
     - constants.conf
     - icinga2.conf
@@ -73,7 +73,7 @@
     - icinga2
     - icinga2-cert
 
-- template: src=etc/icinga2/zones.conf dest=/etc/icinga2/zones.conf owner=root group=root mode=0644
+- template: src=etc/icinga2/zones.conf dest=/etc/icinga2/zones.conf owner="{{ icinga2_user }}" group="{{ icinga2_user }}" mode=0644
   notify: restart icinga2
   tags:
     - icinga2
@@ -92,14 +92,14 @@
 - template: src=features-available/api.conf dest=/etc/icinga2/features-available/api.conf owner=root group=root mode=0644
   notify: restart icinga2
 
-- template: src=zones.d/hostzone-for-master.conf dest=/etc/icinga2/zones.d/{{ inventory_hostname }}.conf owner=root group=root mode=0644
+- template: src="zones.d/hostzone-for-master.conf" dest="/etc/icinga2/zones.d/{{ inventory_hostname }}.conf" owner="{{ icinga2_user }}" group="{{ icinga2_user }}" mode=0644
   delegate_to: "{{ icinga2_main_node }}"
   notify: restart icinga2
   tags:
     - icinga2
     - icinga2-cert
 
-- template: src=zones.d/host-for-master.conf dest=/etc/icinga2/zones.d/master/hosts/{{ inventory_hostname }}.conf owner=root group=root mode=0644
+- template: src="zones.d/host-for-master.conf" dest="/etc/icinga2/zones.d/master/hosts/{{ inventory_hostname }}.conf" owner="{{ icinga2_user }}" group="{{ icinga2_user }}" mode=0644
   delegate_to: "{{ icinga2_main_node }}"
   notify: restart icinga2
   tags:
@@ -118,7 +118,7 @@
 ##
 ## We deploy the scripts to /usr/local/lib/icinga2-plugins
 ## because some are run by less-privileged users and might not have access to /etc/icinga2
-- file: path="{{ item }}" state=directory owner=root group={{ icinga2_user }} mode=0755
+- file: path="{{ item }}" state=directory owner="{{ icinga2_user }}" group={{ icinga2_user }} mode=0755
   with_items:
     - /etc/icinga2/conf.d/commands
     - /etc/icinga2/conf.d/events
@@ -160,7 +160,7 @@
     - icinga2-custom-checks
 
 - name: Deploy custom checks configurations
-  template: src="etc/icinga2/conf.d/commands/{{ item }}.conf" dest="/etc/icinga2/conf.d/commands/{{ item }}.conf" owner=root group=root mode=0644
+  template: src="etc/icinga2/conf.d/commands/{{ item }}.conf" dest="/etc/icinga2/conf.d/commands/{{ item }}.conf" owner="{{ icinga2_user }}" group="{{ icinga2_user }}" mode=0644
   with_items:
     - aegir_disk
     - aegir_sql

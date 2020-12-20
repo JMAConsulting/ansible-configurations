@@ -27,3 +27,6 @@ git_repos:
  - { name: "acorn-primary", path: "/home/acorncanada.org/htdocs", report_email_address: "help+jma-acorn-canada-acorn-canada-5-issue-@jmaconsulting.biz"}
  - { name: "acorn-debtresources", path: "/home/debtresources.acorncanada.org/htdocs", report_email_address: "help+jma-acorn-canada-debtresources-68-issue-@jmaconsulting.biz"}
 mariadb_version: "10.5"
+icinga2_display_name: "OVH6 jmaconsulting.biz"
+icinga2_ipv4_address: "192.99.28.93"
+icinga2_ipv6_address: "2607:5300:60:260c:600::"

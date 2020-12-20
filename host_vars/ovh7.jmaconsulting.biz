@@ -26,3 +26,6 @@ clamav_scan_hour: 20
 git_repos:
  - { name: "weownit-d8", path: "/home/weown.it", report_email_address: "help+jma-weown-it-weown-it-49-issue-@jmaconsulting.biz"}
  - { name: "organize-weownit-wp", path: "/home/organize.weown.it/htdocs", report_email_address: "help+jma-weown-it-organize-weownit-66-issue-@jmaconsulting.biz"}
+icinga2_display_name: "OVH7 jmaconsulting.biz"
+icinga2_ipv4_address: "192.99.28.94"
+icinga2_ipv6_address: "2607:5300:60:260c:700::"

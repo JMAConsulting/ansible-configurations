@@ -20,3 +20,6 @@ preseed_country: CA
 preseed_locale: en_US.UTF-8
 kvm_zfs_pool: zxb
 clamav_scan_hour: 17
+icinga2_display_name: "b2 - juttav aegir server"
+icinga2_ipv4_address: "192.99.84.209"
+icinga2_ipv6_address: "2607:5300:203:815e:200::"

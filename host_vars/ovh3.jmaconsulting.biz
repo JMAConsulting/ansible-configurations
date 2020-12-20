@@ -24,5 +24,6 @@ cv_install: true
 wp_cli_install: true
 clamav_scan_hour: 17
 mariadb_version: "10.5"
-icinga_ipv4_address: "192.99.28.90"
-icinga_display_name: "OVH3"
+icinga2_ipv4_address: "192.99.28.90"
+icinga2_display_name: "OVH3"
+icinga2_ipv6_address: "2607:5300:60:260c:300::"
