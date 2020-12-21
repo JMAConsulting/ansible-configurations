@@ -4,3 +4,6 @@
 [submodule "roles/tripwire"]
 	path = roles/tripwire
 	url = https://github.com/JMAConsulting/ansible-tripwire.git
+[submodule "roles/icinga2"]
+	path = roles/icinga2
+	url = https://github.com/JMAConsulting/ansible-role-icinga2.git
