@@ -29,14 +29,6 @@
     - kvm-server
   tags:
     - kvm-server
-- hosts: localhost
-  become: yes
-  roles: 
-    - php
-    - common-all
-    - backup-client
-  tags:
-    - php
 - hosts: icinga-servers
   become: yes
   roles:
@@ -65,3 +57,13 @@
     - keycloak
   tags:
     - keycloak
+
+- hosts: local-servers
+  become: yes
+  roles:
+    - php
+    - terraform
+    - azure
+  vars:
+    version:
+      terraform: 0.12.29

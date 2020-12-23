@@ -23,7 +23,6 @@ drush_install: true
 wp_cli_install: true
 cv_install: true
 clamav_scan_hour: 17
-mariadb_version: "10.5"
 icinga2_http_host: "jmaconsulting.biz"
 icinga2_ipv4_address: "192.99.28.91"
 icinga2_display_name: "OVH4 jmaconsulting.biz"

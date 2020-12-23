@@ -83,3 +83,6 @@ b2.jmaconsulting.biz
 
 [percona-servers]
 oapproviderlist.ca
+
+[local-servers]
+localhost

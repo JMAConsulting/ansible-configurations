@@ -24,7 +24,6 @@ cv_install: true
 clamav_scan_hour: 18
 git_repos:
  - { name: "acop", path: "/home/my.acop.ca/htdocs", report_email_address: "help+jma-acop-acop-53-issue-@jmaconsulting.biz"}
-mariadb_version: "10.5"
 icinga2_display_name: "OVH5 jmaconsulting.biz"
 icinga2_ipv4_address: "192.99.28.92"
 icinga2_ipv6_address: "2607:5300:60:260c:500::"
