@@ -15,9 +15,7 @@
     - php
     - php-apache
 
-- apt: name={{ item }} state=present install_recommends=no
-  with_items:
-    python-apt
+- apt: name=python-apt state=present install_recommends=no
   tags: php
 
 - apt_key:
@@ -76,57 +74,65 @@
   tags: php
 
 - name: Install PHP Modules
-  apt: name={{ item }} state=present install_recommends=no
-  with_items:
-    - php{{ php_version }}-cli
-    - php{{ php_version }}-common
-    - php{{ php_version }}-curl
-    - php{{ php_version }}-fpm
-    - php{{ php_version }}-dev
-    - php{{ php_version }}-gd
-    - php{{ php_version }}-imap
-    - php{{ php_version }}-intl
-    - php{{ php_version }}-json
-    - php{{ php_version }}-ldap
-    - php{{ php_version }}-mbstring
-    - php{{ php_version }}-imagick 
-    - php{{ php_version }}-mysql
-    - php{{ php_version }}-opcache
-    - php{{ php_version }}-readline
-    - php{{ php_version }}-recode
-    - php{{ php_version }}-soap
-    - php{{ php_version }}-sqlite3
-    - php{{ php_version }}-xml
-    - php{{ php_version }}-xmlrpc
-    - php{{ php_version }}-xsl
-    - php{{ php_version }}-zip
-    - php{{ php_version }}-bcmath
+  apt: 
+    state: present
+    install_recommends: no
+    name:
+      - php{{ php_version }}-cli
+      - php{{ php_version }}-common
+      - php{{ php_version }}-curl
+      - php{{ php_version }}-fpm
+      - php{{ php_version }}-dev
+      - php{{ php_version }}-gd
+      - php{{ php_version }}-imap
+      - php{{ php_version }}-intl
+      - php{{ php_version }}-json
+      - php{{ php_version }}-ldap
+      - php{{ php_version }}-mbstring
+      - php{{ php_version }}-imagick 
+      - php{{ php_version }}-mysql
+      - php{{ php_version }}-opcache
+      - php{{ php_version }}-readline
+      - php{{ php_version }}-recode
+      - php{{ php_version }}-soap
+      - php{{ php_version }}-sqlite3
+      - php{{ php_version }}-xml
+      - php{{ php_version }}-xmlrpc
+      - php{{ php_version }}-xsl
+      - php{{ php_version }}-zip
+      - php{{ php_version }}-bcmath
   tags: php
 
 - name: Install apache webserver
-  apt: name={{ item }} state=present install_recommends=no
-  when: "'apache-servers' in group_names"
-  with_items:
-    - apache2
-    - libapache2-mod-php{{ php_version }}
-  tags: 
-    - php-apache
-    - php
-
-- apt: name={{ item }} state=present install_recommends=no
-  with_items:
-    - certbot
-    - python3-certbot-apache
+  apt: 
+    state: present
+    install_recommends: no
+    name:
+      - apache2
+      - libapache2-mod-php{{ php_version }}
   when: "'apache-servers' in group_names"
   tags: 
     - php-apache
     - php
 
-- apt: name={{ item }} state=absent install_recommends=no
-  with_items:
-    - nginx
-    - php{{ php_version }}-fpm
-    - python3-certbot-nginx
+- apt: 
+    state: present
+    install_recommends: no
+    name:
+      - certbot
+      - python3-certbot-apache
+  when: "'apache-servers' in group_names"
+  tags: 
+    - php-apache
+    - php
+
+- apt: 
+    state: present
+    install_recommends: no
+    name:
+      - nginx
+      - php{{ php_version }}-fpm
+      - python3-certbot-nginx
   when: "'apache-servers' not in group_names"
   tags:
     - php-nginx
@@ -194,11 +200,13 @@
     - php-percona
 
 - name: ubuntu | Install python packages
-  apt: pkg={{ item }} state=present
-  with_items:
-    - vim
-    - python-pycurl
-    - python-mysqldb
+  apt: 
+    state: present
+    install_recommends: no
+    name:
+      - vim
+      - python-pycurl
+      - python-mysqldb
   when: "'percona-servers' in group_names"
   tags:
     - php
@@ -206,11 +214,13 @@
 
 - name: ubuntu | Install Percona packages
   become: yes
-  apt: pkg={{ item }} state=present update_cache=yes
-  with_items:
-    - percona-server-common-5.7
-    - percona-server-client-5.7
-    - percona-server-server-5.7
+  apt: 
+    state: present
+    install_recommends: no
+    name:
+      - percona-server-common-5.7
+      - percona-server-client-5.7
+      - percona-server-server-5.7
   environment:
     DEBIAN_FRONTEND: noninteractive
   when: "'percona-servers' in group_names"
@@ -245,12 +255,14 @@
 
 
 - name: Install MariaDB
-  apt: name={{ item }} state=present install_recommends=no
-  with_items:
-    - mariadb-server
-    - mariadb-server-{{ mariadb_version }}
-    - mariadb-client
-    - mariadb-client-{{ mariadb_version }}
+  apt: 
+    state: present
+    install_recommends: no
+    name:
+      - mariadb-server
+      - mariadb-server-{{ mariadb_version }}
+      - mariadb-client
+      - mariadb-client-{{ mariadb_version }}
 #  when: ansible_distribution == "Debian" || ansible_distribution == "Ubuntu"
   tags: 
     - php-mariadb

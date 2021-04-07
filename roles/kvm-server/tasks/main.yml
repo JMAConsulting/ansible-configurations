@@ -2,23 +2,27 @@
 
 # NB: netcat-openbsd is required if using virt-manager GUI (requires -U option).
 
-- apt: name={{ item }} state=present install_recommends=no
-  with_items:
-    - linux-image-amd64
-    - linux-headers-amd64
+- apt:
+    state: present
+    install_recommends: no
+    name:
+      - linux-image-amd64
+      - linux-headers-amd64
   tags:
     - packages
 
-- apt: name={{ item }} state=present install_recommends=no
-  with_items:
-    - openntpd
-    - qemu-kvm
-    - virtinst
-    - bridge-utils
-    - netcat-openbsd
-    - nvme-cli
-    - parted
-    - zfs-dkms
+- apt: 
+    state: present
+    install_recommends: no
+    name:
+      - openntpd
+      - qemu-kvm
+      - virtinst
+      - bridge-utils
+      - netcat-openbsd
+      - nvme-cli
+      - parted
+      - zfs-dkms
   tags:
     - packages
 
@@ -47,14 +51,16 @@
   tags:
     - kvm-server-zfs
 
-- apt: name={{ item }} state=present install_recommends=no
-  with_items:
-    - zfsutils-linux
-    - zfs-zed
-    - libvirt-clients
-    - libvirt-daemon
-    - libvirt-daemon-system
-    - virt-top
+- apt: 
+    state: present
+    install_recommends: no
+    name:
+      - zfsutils-linux
+      - zfs-zed
+      - libvirt-clients
+      - libvirt-daemon
+      - libvirt-daemon-system
+      - virt-top
 
 - service: name=openntpd state=started enabled=yes
 

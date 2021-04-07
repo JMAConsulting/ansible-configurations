@@ -8,11 +8,13 @@
   tags:
     - packages
 
-- apt: name={{ item }} state=present install_recommends=no
-  with_items:
-    - backupninja
-    - borgbackup
-    - debconf-utils
+- apt: 
+    state: present
+    install_recommends: no
+    name:
+      - backupninja
+      - borgbackup
+      - debconf-utils
   tags:
     - packages
 

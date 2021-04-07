@@ -3,10 +3,11 @@
 # Installs Gitlab using Omnibus packages
 # https://about.gitlab.com/downloads/#ubuntu1604
 
-- apt: pkg="{{ item }}" state=installed
-  with_items:
-    - debian-archive-keyring
-    - apt-transport-https
+- apt: 
+    state: present
+    name:
+      - debian-archive-keyring
+      - apt-transport-https
   tags:
     - gitlab
     - packages
@@ -25,7 +26,7 @@
     - gitlab
     - packages
 
-- apt: pkg=gitlab-ce state=installed
+- apt: name=gitlab-ce state=present
   tags:
     - gitlab
     - packages
