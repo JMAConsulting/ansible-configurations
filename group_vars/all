@@ -43,6 +43,6 @@ ssh_users:
   - joe
   - edsel
   - monish
-report_email_address: "support@jmaconsulting.biz"
+report_email_address: "help+jma-maintenance-plans-100-issue-@jmaconsulting.biz"
 past_jma_staff:
   - calum

@@ -1,0 +1,3 @@
+drush_install: true
+wp_cli_install: true
+cv_install: true

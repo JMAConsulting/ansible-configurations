@@ -1,10 +1,56 @@
 ---
-
-- name: Create system users
-  user: name={{ item | basename }} shell="/bin/bash"
+- name: Generate a random password for users
+  set_fact:
+    password_item: "{{ item }};{{ lookup('password', '/dev/null chars=ascii_letters,digits length=25') }}"
   with_items: "{{ ssh_users }}"
+  register: password_results
   tags:
     - sshuserkeys
+    - sshuserkeys-test
+
+- name: Format random password list
+  set_fact:
+    password_list: "{{ password_results.results | selectattr('skipped', 'undefined') | map(attribute='ansible_facts.password_item') | list }}"
+  tags:
+    - sshuserkeys
+    - sshuserkeys-test
+
+- name: Format random password dict
+  set_fact:
+    password_dict: "{{ password_dict|default([]) + [ { 'name': item.split(';')[0], 'password': item.split(';')[1] } ] }}"
+  with_items: "{{ password_list }}"
+  tags:
+    - sshuserkeys
+    - sshuserkeys-test
+
+- name: Create system users
+  user:
+    name: "{{ item.name }}"
+    shell: "/bin/bash"
+    password: "{{ item.password | password_hash('sha512') }}"
+    update_password: "on_create"
+  with_items:
+    - "{{ password_dict }}"
+  tags:
+    - sshuserkeys
+
+# force=no, combined with update_password=on_create, should ensure
+# that we do not change the password of existing users. If they had
+# already logged-in and deleted the pw.txt, this will re-create it,
+# but it will not be valid, so it's not a big issue.
+- name: Save the user password in pw.txt
+  copy:
+    content: "{{ item.password }}"
+    dest: "/home/{{ item.name }}/pw.txt"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: '0600'
+    force: "no"
+  with_items:
+    - "{{ password_dict }}"
+  tags:
+    - sshuserkeys
+    - sshuserkeys-test
 
 - name: Deploy ssh user keys
   authorized_key: user={{ item }} key="{{ lookup('file', '../sshkeys/' + item + '.pub') }}"
@@ -13,7 +59,7 @@
     - sshuserkeys
 
 - name: Add priviledged users to sudo, adm, www-editors groups.
-  user: name={{ item }} groups="{{ item }},sudo,adm,www-editors" group="{{ item }}" append=yes
+  user: name={{ item }} groups="{{ item }},sudo,adm" group="{{ item }}" append=yes
   with_items: "{{ root_sudoers }}"
   tags:
     - sshuserkeys
@@ -22,6 +68,7 @@
 - name: remove old system users
   user: name={{ item | basename }} state=absent
   with_items: "{{ past_jma_staff }}"
+  when: past_jma_staff
   tags:
     - sshuserkeys
     - sshuserkeys-past-staff

@@ -1,0 +1,24 @@
+- name: prerequsite for installing terraform
+  apt:
+    install_recommends: no
+    state: present 
+    name:
+      - zip
+  tags: 
+    - terraform
+
+- name: download and unzip terraform
+  unarchive:
+    remote_src: yes
+    src: https://releases.hashicorp.com/terraform/{{ version.terraform }}/terraform_{{ version.terraform }}_linux_amd64.zip
+    dest: /usr/local/bin/
+    validate_certs: no
+  tags: 
+   - terraform
+
+- name: make terraform executable
+  file:
+    path: /usr/local/bin/terraform
+    mode: 0755
+  tags:
+    - terraform

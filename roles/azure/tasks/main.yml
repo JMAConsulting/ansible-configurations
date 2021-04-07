@@ -1,0 +1,37 @@
+- name: Install necessary APT modules
+  apt: 
+    state: present
+    install_recommends: no
+    name:
+      - curl
+      - ca-certificates
+      - apt-transport-https
+      - lsb-release
+      - gnupg
+  tags:
+    - azure
+    - azure-cli
+
+- name: add Azure GPG key
+  apt_key:
+    url: "https://packages.microsoft.com/keys/microsoft.asc"
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/microsoft.gpg
+  tags:
+    - azure
+    - azure-cli
+
+- name: Add in Azure repo
+  apt_repository:
+    repo='deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ ansible_distribution_release }} main'
+    state=present
+    update_cache=yes
+  tags: 
+    - azure
+    - azure-cli 
+
+- name: Install Azure cli
+  apt: name=azure-cli state=present install_recommends=no
+  tags:
+    - azure
+    - azure-cli

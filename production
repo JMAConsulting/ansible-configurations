@@ -1,6 +1,7 @@
 b.jmaconsulting.biz
 b1.jmacosulting.biz
 b2.jmaconsulting.biz
+b3.jmaconsulting.biz
 rh2.jmaconsulting.biz
 oapproviderlist.ca
 ovh.jmaconsulting.biz
@@ -41,6 +42,7 @@ ovh7.jmaconsulting.biz
 ovh8.jmaconsulting.biz
 ovh9.jmaconsulting.biz
 b1.jmaconsulting.biz
+b3.jmaconsulting.biz
 
 [apache-servers]
 rh2.jmaconsulting.biz
@@ -55,6 +57,7 @@ ovh7.jmaconsulting.biz
 ovh8.jmaconsulting.biz
 ovh9.jmaconsulting.biz
 b1.jmaconsulting.biz
+b3.jmaconsulting.biz
 
 [kvm-servers] 
 ovh.jmaconsulting.biz
