@@ -23,3 +23,5 @@ clamav_scan_hour: 17
 icinga2_display_name: "b2 - juttav aegir server"
 icinga2_ipv4_address: "192.99.84.210"
 icinga2_ipv6_address: "2607:5300:203:815e:300::"
+wp_cli_install: true
+cv_install: true

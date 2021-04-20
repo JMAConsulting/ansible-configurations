@@ -138,6 +138,36 @@
     - php-nginx
     - php
 
+- name: Deploy JMA PHP Customisation
+  template:
+    src=etc/php/{{ php_version }}/mods-available/90-jma.ini
+    dest=/etc/php/{{ php_version }}/mods-available/90-jma.ini
+    owner=root group=root mode=0644
+  tags:
+    - php-config
+    - php
+
+- name: Symlink JMA PHP Customisation for Apache
+  file:
+    src: /etc/php/{{ php_version }}/mods-available/90-jma.ini
+    dest: /etc/php/{{ php_version }}/apache2/conf.d/90-jma.ini
+    owner: root
+    group: root
+    state: link
+  when: "'apache-servers' in group_names"
+  notify: restart apache
+  tags:
+    - php-config
+    - php
+
+- name: Symlink JMA PHP Customisation for php-fpm
+  file: src="/etc/php/{{ php_version }}/mods-available/90-jma.ini" dest="/etc/php/{{ php_version }}/fpm/conf.d/90-jma.ini" owner=root group=root state=link
+  notify: restart php-fpm
+  when: "'apache-servers' not in group_names"
+  tags:
+    - php-config
+    - php
+
 - name: Enable PHP Module
   apache2_module:
     state: present
